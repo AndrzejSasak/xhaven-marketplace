@@ -15,10 +15,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInteceptor } from './helpers/auth.interceptor';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
+import { TokenInteceptor } from './helpers/auth.interceptor';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent }
