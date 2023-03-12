@@ -19,6 +19,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { TokenInteceptor } from './helpers/auth.interceptor';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent }
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
     MatSlideToggleModule,
     MatSelectModule,
     MatOptionModule,
+    NgbModule,
   ],
   providers: [
     {

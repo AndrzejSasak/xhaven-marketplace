@@ -1,20 +1,46 @@
-<mat-card>
-    <mat-card-content>
-      <form>
-        <h2>Log In</h2>
-        <mat-form-field>
-          <input matInput placeholder="Email" [(ngModel)]="email" name="email" required>
-          <mat-error>
-            Please provide a valid email address
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
-          <mat-error>
-            Please provide a valid password
-          </mat-error>
-        </mat-form-field>
-        <button mat-raised-button color="primary" (click)="login()">Login</button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+<div class="container">
+  <div class="row vh-100">
+    <div class="col-6 align-self-center">
+      <img src="/assets/img/logo.png" class="img-fluid" alt="image">
+    </div>
+    <div class="col-6 align-self-center">
+      <mat-card>
+        <mat-card-content>
+          <form>
+            <mat-card-header>Log In</mat-card-header>
+            <mat-form-field>
+              <input matInput placeholder="Email" [(ngModel)]="email" name="email" required>
+              <mat-error>
+                Please provide a valid email address
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
+              <mat-error>
+                Please provide a valid password
+              </mat-error>
+            </mat-form-field>
+            <!-- <div class="container">
+              <div class="row">
+                  <button mat-raised-button color="primary" (click)="login()">Login</button>
+              </div>
+              <div class="row">
+                  <button mat-raised-button color="primary" (click)="registerRedirect()">Register</button>
+              </div>
+            </div> -->
+            <div class="container">
+              <div class="row">
+                  <div class="col">
+                    <button mat-raised-button color="primary" (click)="login()">Login</button>
+                  </div>
+                  <div class="col">
+                    <button mat-raised-button color="primary" (click)="registerRedirect()">Register</button>
+                  </div>
+              </div>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
