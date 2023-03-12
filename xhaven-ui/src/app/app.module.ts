@@ -20,15 +20,18 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { TokenInteceptor } from './helpers/auth.interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RegisterComponent } from './components/register/register.component';
 
 const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent }
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule, 
