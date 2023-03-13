@@ -18,18 +18,25 @@ export class LoginComponent implements OnInit {
   
 
   login() {
+    if(this.authService.isAuthenticated()) {
+      this.router.navigate(['home']);
+    }
+
     const loginDto: LoginDto = {
       'email': this.email,
       'password': this.password
-    }
+    };
     
     this.authService.login(loginDto).subscribe(
-      (tokenDto: any) => localStorage.setItem(this.authService.JWT_LOCAL_STORAGE_KEY, tokenDto.token)
-    );
+      (tokenDto: any) => {
+        localStorage.setItem(this.authService.JWT_LOCAL_STORAGE_KEY, tokenDto.token);
+        this.router.navigate(['home']);
+      }
+    )
   }
 
   registerRedirect() {
-    
+    this.router.navigate(['register']);
   }
 
   ngOnInit(): void {

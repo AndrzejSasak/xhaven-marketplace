@@ -21,17 +21,23 @@ import { LoginComponent } from './components/login/login.component';
 import { TokenInteceptor } from './helpers/auth.interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegisterComponent } from './components/register/register.component';
+import { HomeComponent } from './components/home/home.component';
+import { AuthGuardService } from './services/auth-guard.service';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
+  { path: '**', redirectTo: 'home'}
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule, 
@@ -57,7 +63,12 @@ const appRoutes: Routes = [
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInteceptor,
       multi: true
-    }
+    },
+    {
+      provide: JWT_OPTIONS,
+      useValue: JWT_OPTIONS,
+    },
+    JwtHelperService
   ],
   bootstrap: [AppComponent]
 })

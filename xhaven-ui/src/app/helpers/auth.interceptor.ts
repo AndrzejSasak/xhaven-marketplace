@@ -16,6 +16,14 @@ constructor(private authService: AuthService) {}
 
 intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     
+    if(req.headers.has('skipIntercept')) {
+        req = req.clone({
+            headers: req.headers.delete('skipIntercept')
+        })
+
+        return next.handle(req);
+    }
+
     req = req.clone({
         setHeaders: {
             Authorization: `Bearer ${this.authService.getToken()}`
