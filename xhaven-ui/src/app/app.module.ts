@@ -13,6 +13,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion'
+import { MatPaginatorModule } from '@angular/material/paginator'
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -24,6 +26,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -37,7 +40,8 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule, 
@@ -56,6 +60,8 @@ const appRoutes: Routes = [
     MatSlideToggleModule,
     MatSelectModule,
     MatOptionModule,
+    MatExpansionModule,
+    MatPaginatorModule,
     NgbModule,
   ],
   providers: [
