@@ -1,3 +1,5 @@
+import { CategoryEnum } from "../category";
+
 export interface LoginDto {
     email?: string;
     password?: string;
@@ -13,4 +15,12 @@ export interface RegisterDto {
 
 export interface TokenDto {
     token?: string;
+}
+
+export interface OfferDto {
+    title?: string;
+    description?: string;
+    category?: CategoryEnum;
+    postedDate?: string;
+    price?: string;
 }
