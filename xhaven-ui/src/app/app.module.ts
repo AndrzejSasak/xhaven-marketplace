@@ -13,8 +13,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import { MatExpansionModule } from '@angular/material/expansion'
-import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTabsModule } from '@angular/material/tabs'; 
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -27,11 +28,13 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
+  { path: 'home', component: HomeComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: '**', redirectTo: 'home'}
 ]
 
@@ -41,7 +44,8 @@ const appRoutes: Routes = [
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule, 
@@ -62,6 +66,7 @@ const appRoutes: Routes = [
     MatOptionModule,
     MatExpansionModule,
     MatPaginatorModule,
+    MatTabsModule,
     NgbModule,
   ],
   providers: [
