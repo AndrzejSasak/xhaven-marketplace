@@ -1,0 +1,9 @@
+<input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+<mat-card (click)="fileUpload.click()">
+<div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+    <img class="img-fluid" [src]="imageURL" [alt]="uploadForm.value.name">
+</div>
+<button>
+    <mat-icon>attach_file</mat-icon>
+</button>
+</mat-card>
