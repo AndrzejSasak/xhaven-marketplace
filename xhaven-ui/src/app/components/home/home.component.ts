@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { OfferDto } from 'src/app/models/dto/dto-models';
 
 @Component({
@@ -48,4 +49,10 @@ export class HomeComponent {
   ];
 
   length: number = this.offerList.length;
+
+  constructor(private router: Router) {}
+
+  newOfferRedirect() {
+    this.router.navigate(['new-offer']);
+  }
 }
