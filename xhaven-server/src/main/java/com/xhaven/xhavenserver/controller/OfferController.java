@@ -1,10 +1,14 @@
 package com.xhaven.xhavenserver.controller;
 
+import com.xhaven.xhavenserver.dto.OfferDto;
+import com.xhaven.xhavenserver.model.entity.Offer;
+import com.xhaven.xhavenserver.service.OfferService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.modelmapper.ModelMapper;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/v1/offers")
@@ -12,9 +16,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class OfferController {
 
-    @GetMapping("/demo")
-    public String getDemo() {
-        return "demo works!";
+    private final OfferService offerService;
+    private final ModelMapper modelMapper;
+
+    @GetMapping("/{offerId}")
+    public OfferDto getOfferById(@PathVariable Long offerId) {
+        return modelMapper.map(offerService.getOfferById(offerId), OfferDto.class);
+    }
+
+    @GetMapping
+    public List<OfferDto> getAllOffers() {
+        return offerService.getAllOffers().stream()
+                .map(offer -> modelMapper.map(offer, OfferDto.class))
+                .toList();
+    }
+
+    @PostMapping
+    public void postOffer(@RequestBody Offer offer) {
+        offerService.saveNewOffer(offer);
     }
 
 }
