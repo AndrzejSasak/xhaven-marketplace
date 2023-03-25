@@ -29,12 +29,17 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { NewOfferComponent } from './components/new-offer/new-offer.component';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { OfferComponent } from './components/offer/offer.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
+  { path: 'new-offer', component: NewOfferComponent, canActivate: [AuthGuardService] },
+  { path: 'offer/:offerId', component: OfferComponent },
   { path: '**', redirectTo: 'home'}
 ]
 
@@ -45,7 +50,10 @@ const appRoutes: Routes = [
     RegisterComponent,
     HomeComponent,
     NavbarComponent,
-    ProfileComponent
+    ProfileComponent,
+    NewOfferComponent,
+    ImageUploadComponent,
+    OfferComponent
   ],
   imports: [
     BrowserModule, 

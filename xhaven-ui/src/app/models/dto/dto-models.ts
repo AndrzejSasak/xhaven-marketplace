@@ -18,9 +18,16 @@ export interface TokenDto {
 }
 
 export interface OfferDto {
+    id?: string;
     title?: string;
     description?: string;
     category?: CategoryEnum;
+    images?: ImageDto[];
     postedDate?: string;
     price?: string;
+}
+
+export interface ImageDto {
+    id?: string;
+    imageName?: string;
 }

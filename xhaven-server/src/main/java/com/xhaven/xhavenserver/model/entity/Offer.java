@@ -1,10 +1,14 @@
 package com.xhaven.xhavenserver.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xhaven.xhavenserver.model.CategoryEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "OFFER")
@@ -23,10 +27,18 @@ public class Offer {
     private String description;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "CATEGORY")
     private CategoryEnum category;
+
+    @Column(name = "PRICE")
+    private BigDecimal price;
+
+    @OneToMany
+    private List<Image> images;
 
     @ManyToOne
     @JoinColumn(name = "ID_USER")
+    @JsonIgnore
     private User owner;
 
     @Column(name = "POSTED_DATE")
