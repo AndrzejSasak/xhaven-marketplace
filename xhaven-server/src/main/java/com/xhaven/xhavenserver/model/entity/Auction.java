@@ -1,23 +1,21 @@
 package com.xhaven.xhavenserver.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xhaven.xhavenserver.model.CategoryEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "OFFER")
+@Table(name = "AUCTION")
 @Getter
-public class Offer {
+public class Auction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID_OFFER")
+    @Column(name = "ID_AUCTION")
     private Long id;
 
     @Column(name = "TITLE")
@@ -26,9 +24,8 @@ public class Offer {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "CATEGORY")
-    private CategoryEnum category;
+    @ManyToOne
+    private Category category;
 
     @Column(name = "PRICE")
     private BigDecimal price;

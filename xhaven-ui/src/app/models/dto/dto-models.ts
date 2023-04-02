@@ -17,7 +17,7 @@ export interface TokenDto {
     token?: string;
 }
 
-export interface OfferDto {
+export interface AuctionDto {
     id?: string;
     title?: string;
     description?: string;
@@ -30,4 +30,9 @@ export interface OfferDto {
 export interface ImageDto {
     id?: string;
     imageName?: string;
+}
+
+export interface CategoryDto {
+  categoryName?: string;
+  subcategories?: CategoryDto[];
 }

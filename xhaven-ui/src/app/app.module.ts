@@ -15,7 +15,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTabsModule } from '@angular/material/tabs'; 
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTreeModule } from '@angular/material/tree';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -29,17 +30,17 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { NewOfferComponent } from './components/new-offer/new-offer.component';
+import { NewAuctionComponent } from './components/new-auction/new-auction.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
-import { OfferComponent } from './components/offer/offer.component';
+import { AuctionComponent } from './components/auction/auction.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
-  { path: 'new-offer', component: NewOfferComponent, canActivate: [AuthGuardService] },
-  { path: 'offer/:offerId', component: OfferComponent },
+  { path: 'new-auction', component: NewAuctionComponent, canActivate: [AuthGuardService] },
+  { path: 'auction/:auctionId', component: AuctionComponent },
   { path: '**', redirectTo: 'home'}
 ]
 
@@ -51,14 +52,14 @@ const appRoutes: Routes = [
     HomeComponent,
     NavbarComponent,
     ProfileComponent,
-    NewOfferComponent,
+    NewAuctionComponent,
     ImageUploadComponent,
-    OfferComponent
+    AuctionComponent
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true }), 
+    RouterModule.forRoot(appRoutes, { enableTracing: true }),
     BrowserAnimationsModule,
     MatCardModule,
     FormsModule,
@@ -75,6 +76,7 @@ const appRoutes: Routes = [
     MatExpansionModule,
     MatPaginatorModule,
     MatTabsModule,
+    MatTreeModule,
     NgbModule,
   ],
   providers: [
