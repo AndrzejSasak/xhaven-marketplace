@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col">
             <div class="d-flex justify-content-center ">
-                <button mat-flat-button id="add-offer-btn" (click)="newOfferRedirect()">Add offer</button>
+                <button mat-flat-button id="add-auction-btn" (click)="newAuctionRedirect()">Add auction</button>
             </div>
         </div>
     </div>
@@ -77,28 +77,28 @@
             </div>
         </div>
     </mat-card>
-    
-   
+
+
     <mat-card id="search-results">
         <mat-card-content>
             <h2>Search results</h2>
-            <mat-paginator 
+            <mat-paginator
                     [length]="length"
                     [pageSize]="10"
                     [pageSizeOptions]="[5, 10, 25, 100]"
                     aria-label="Select page">
                     </mat-paginator>
-            <div *ngFor="let offer of offerList" class="offer">
+            <div *ngFor="let auction of auctionList" class="auction">
                 <mat-card class="border">
                     <mat-card-content>
-                        <img mat-card-image src="/assets/img/logo.png" class="offer-img">
-                        <p>{{ offer.title }}</p>
-                        <p>{{ offer.description }}</p>
-                        <p>{{ offer.postedDate }}</p>
+                        <img mat-card-image src="/assets/img/logo.png" class="auction-img">
+                        <p>{{ auction.title }}</p>
+                        <p>{{ auction.description }}</p>
+                        <p>{{ auction.postedDate }}</p>
                     </mat-card-content>
                 </mat-card>
             </div>
         </mat-card-content>
     </mat-card>
-       
+
 </div>

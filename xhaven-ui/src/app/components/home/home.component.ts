@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { OfferDto } from 'src/app/models/dto/dto-models';
-import { OfferService } from 'src/app/services/offer.service';
+import { AuctionDto } from 'src/app/models/dto/dto-models';
+import { AuctionService } from 'src/app/services/auction.service';
 
 @Component({
   selector: 'app-home',
@@ -10,20 +10,20 @@ import { OfferService } from 'src/app/services/offer.service';
 })
 export class HomeComponent implements OnInit {
 
-  offerList: OfferDto[] = [];
+  auctionList: AuctionDto[] = [];
 
   length: number;
 
-  constructor(private router: Router, private offerService: OfferService) {}
+  constructor(private router: Router, private auctionService: AuctionService) {}
 
   ngOnInit(): void {
-    this.offerService.getOffers().subscribe((offers: OfferDto[]) => {
-      this.offerList = this.offerList.concat(offers);
-      this.length = this.offerList.length; 
+    this.auctionService.getAuctions().subscribe((auctions: AuctionDto[]) => {
+      this.auctionList = this.auctionList.concat(auctions);
+      this.length = this.auctionList.length;
     });
   }
 
-  newOfferRedirect() {
-    this.router.navigate(['new-offer']);
+  newAuctionRedirect() {
+    this.router.navigate(['new-auction']);
   }
 }

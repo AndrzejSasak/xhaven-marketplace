@@ -38,7 +38,7 @@ public class User {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "owner")
-    private List<Offer> offers;
+    private List<Auction> auctions;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_ROLE",
