@@ -3,7 +3,7 @@
 <div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
     <img class="img-fluid" [src]="imageURL" [alt]="uploadForm.value.name">
 </div>
-<button>
+<button *ngIf="!imageURL && imageURL !== ''">
     <mat-icon>attach_file</mat-icon>
 </button>
 </mat-card>

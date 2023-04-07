@@ -1,9 +1,9 @@
-package com.xhaven.xhavenserver.dto;
+package com.xhaven.xhavenserver.dto.auth;
 
 import lombok.Data;
 
 @Data
-public class RegisterRequest {
+public class RegisterRequestDto {
 
     private final String name;
     private final String surname;

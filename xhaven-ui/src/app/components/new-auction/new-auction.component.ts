@@ -4,9 +4,8 @@ import {FormBuilder} from '@angular/forms';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {CategoryService} from "../../services/category.service";
-import {CategoryDto} from "../../models/dto/dto-models";
-
-// import { ImageUploadComponent } from '../image-upload/image-upload.component';
+import {CategoryDto, NewAuctionDto} from "../../models/dto/dto-models";
+import {AuctionService} from "../../services/auction.service";
 
 @Component({
   selector: 'app-new-auction',
@@ -17,25 +16,61 @@ export class NewAuctionComponent implements OnInit {
   treeControl = new NestedTreeControl<CategoryDto>(node => node.subcategories);
   dataSource = new MatTreeNestedDataSource<CategoryDto>();
 
-  chosenCategory: string;
-  // imageUploads: ImageUploadComponent[];
+  chosenCategoryName?: string;
+
+  chosenCategory: CategoryDto;
+  title: string;
+  description: string;
+  price: string;
+  contactInformation: string;
+  phoneNumber: string;
+
+  imageComponentToImageMap: Record<number, File> = {};
+  images: File[];
 
   constructor(private httpClient: HttpClient,
               private fb: FormBuilder,
-              private categoryService: CategoryService) {
-    // let imageUpload = new ImageUploadComponent(httpClient, fb);
+              private categoryService: CategoryService,
+              private auctionService: AuctionService) {
   }
-
   hasChild = (_: number, node: CategoryDto) => !!node.subcategories && node.subcategories.length > 0;
 
-  setCategory(name: string) {
-    this.chosenCategory = name;
+  setCategory(category: CategoryDto): void {
+    this.chosenCategoryName = category.categoryName;
+    this.chosenCategory = category;
   }
   ngOnInit(): void {
-    // this.dataSource.data = //todo: category json from backend
-    this.categoryService.getCategories().subscribe((categories: CategoryDto[]) => {
+    this.categoryService.getCategories().subscribe((categories: CategoryDto[]): void => {
       this.dataSource.data = categories;
     })
+  }
+
+  uploadImage(imageData: any): void {
+    this.imageComponentToImageMap[imageData.componentId] = imageData.file
+  }
+
+  postAuction(): void {
+    this.images = Object.values(this.imageComponentToImageMap) as File[];
+    let formDataWhole = new FormData();
+
+    this.images.forEach((image: File) => {
+      formDataWhole.append('files', image);
+    });
+
+    const newAuctionDto: NewAuctionDto = {
+      "title": this.title,
+      "description": this.description,
+      "price": this.price,
+      "contactInformation": this.contactInformation,
+      "phoneNumber": this.phoneNumber,
+      "category": this.chosenCategory
+    }
+
+    formDataWhole.append('newAuctionDto', new Blob([JSON.stringify(newAuctionDto)], {
+      type: 'application/json'
+    }))
+
+    this.auctionService.postNewAuction(formDataWhole).subscribe();
   }
 
 }

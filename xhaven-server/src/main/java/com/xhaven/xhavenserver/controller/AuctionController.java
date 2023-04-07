@@ -1,11 +1,15 @@
 package com.xhaven.xhavenserver.controller;
 
 import com.xhaven.xhavenserver.dto.AuctionDto;
+import com.xhaven.xhavenserver.dto.NewAuctionDto;
 import com.xhaven.xhavenserver.model.entity.Auction;
 import com.xhaven.xhavenserver.service.AuctionService;
+import com.xhaven.xhavenserver.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -31,9 +35,9 @@ public class AuctionController {
                 .toList();
     }
 
-    @PostMapping
-    public void postAuction(@RequestBody Auction auction) {
-        auctionService.saveNewAuction(auction);
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void postAuction(@RequestParam MultipartFile[] files, @RequestPart NewAuctionDto newAuctionDto) {
+        auctionService.saveNewAuction(files, modelMapper.map(newAuctionDto, Auction.class));
     }
 
 }
