@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 public class CategoryDto {
 
+    private Long id;
     private String categoryName;
     private List<CategoryDto> subcategories;
 

@@ -1,13 +1,13 @@
 package com.xhaven.xhavenserver.service;
 
-import com.xhaven.xhavenserver.dto.AuthenticationResponse;
-import com.xhaven.xhavenserver.dto.LoginRequest;
+import com.xhaven.xhavenserver.dto.auth.AuthenticationResponseDto;
+import com.xhaven.xhavenserver.dto.auth.LoginRequestDto;
 import com.xhaven.xhavenserver.model.entity.Token;
 import com.xhaven.xhavenserver.model.TokenType;
 import com.xhaven.xhavenserver.config.security.CustomUserDetails;
 import com.xhaven.xhavenserver.config.security.JwtService;
 import com.xhaven.xhavenserver.repository.TokenRepository;
-import com.xhaven.xhavenserver.dto.RegisterRequest;
+import com.xhaven.xhavenserver.dto.auth.RegisterRequestDto;
 import com.xhaven.xhavenserver.model.RoleEnum;
 import com.xhaven.xhavenserver.model.entity.Role;
 import com.xhaven.xhavenserver.model.entity.User;
@@ -32,12 +32,12 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest registerRequest) {
+    public AuthenticationResponseDto register(RegisterRequestDto registerRequestDto) {
         User newUser = User.builder()
-                .name(registerRequest.getName())
-                .surname(registerRequest.getSurname())
-                .email(registerRequest.getEmail())
-                .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .name(registerRequestDto.getName())
+                .surname(registerRequestDto.getSurname())
+                .email(registerRequestDto.getEmail())
+                .password(passwordEncoder.encode(registerRequestDto.getPassword()))
                 .roles(Set.of(new Role(RoleEnum.ROLE_USER)))
                 .build();
 
@@ -45,24 +45,24 @@ public class AuthService {
 
         String jwtToken = jwtService.generateToken(new CustomUserDetails(newUser));
         saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.builder()
+        return AuthenticationResponseDto.builder()
                 .token(jwtToken)
                 .build();
     }
 
-    public AuthenticationResponse login(LoginRequest loginRequest) {
+    public AuthenticationResponseDto login(LoginRequestDto loginRequestDto) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(),
-                        loginRequest.getPassword()
+                        loginRequestDto.getEmail(),
+                        loginRequestDto.getPassword()
                 )
         );
-        User user = userRepository.findByEmail(loginRequest.getEmail())
+        User user = userRepository.findByEmail(loginRequestDto.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException("User with this email not found!"));
         String jwtToken = jwtService.generateToken(new CustomUserDetails(user));
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-        return AuthenticationResponse.builder()
+        return AuthenticationResponseDto.builder()
                 .token(jwtToken)
                 .build();
     }

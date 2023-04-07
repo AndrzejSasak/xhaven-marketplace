@@ -21,18 +21,31 @@ export interface AuctionDto {
     id?: string;
     title?: string;
     description?: string;
-    category?: CategoryEnum;
+    categoryId?: string;
     images?: ImageDto[];
     postedDate?: string;
     price?: string;
+    contactInformation?: string,
+    phoneNumber?: string
+}
+
+export interface NewAuctionDto {
+  title?: string,
+  description?: string,
+  category?: CategoryDto,
+  price?: string,
+  contactInformation?: string,
+  phoneNumber?: string
 }
 
 export interface ImageDto {
     id?: string;
-    imageName?: string;
+    imagePath?: string;
+    file?: FormData;
 }
 
 export interface CategoryDto {
+  id?: string;
   categoryName?: string;
   subcategories?: CategoryDto[];
 }

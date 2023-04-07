@@ -13,8 +13,9 @@ public class AuctionDto {
     private Long id;
     private String title;
     private String description;
-    private CategoryEnum category;
+    private String contactInformation;
     private BigDecimal price;
+    private CategoryDto category;
     private List<ImageDto> images;
     private LocalDate postedDate;
 

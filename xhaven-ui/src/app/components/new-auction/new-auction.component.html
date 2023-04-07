@@ -11,7 +11,7 @@
                     </div>
                     <div class="col">
                         <mat-form-field>
-                            <input matInput placeholder="Title" required>
+                            <input matInput [(ngModel)]="title" name="title" placeholder="Title" required>
                         </mat-form-field>
                     </div>
                     <div class="col">
@@ -19,7 +19,7 @@
                     </div>
                     <div class="col">
                         <mat-form-field>
-                            <textarea maxLength="1024" matInput placeholder="Description"></textarea>
+                            <textarea maxLength="1024" matInput [(ngModel)]="description" name="description" placeholder="Description"></textarea>
                         </mat-form-field>
                     </div>
                 </mat-card-content>
@@ -31,7 +31,7 @@
                     <mat-label>Category</mat-label>
                     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="category-tree">
                         <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-                            <button mat-stroked-button (click)="setCategory(node.categoryName)">
+                            <button mat-stroked-button (click)="setCategory(node)">
                                 {{node.categoryName}}
                             </button>
                         </mat-tree-node>
@@ -51,7 +51,7 @@
                           </div>
                         </mat-nested-tree-node>
                     </mat-tree>
-                    <p>Chosen category: {{chosenCategory}}</p>
+                    <p>Chosen category: {{chosenCategoryName}}</p>
                 </mat-card-content>
            </mat-card>
         </div>
@@ -62,7 +62,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col" *ngFor="let number of [1,2,3,4]">
-                                <app-image-upload></app-image-upload>
+                                <app-image-upload [componentId]="number" (onImageUploaded)="uploadImage($event)"></app-image-upload>
                             </div>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                     </div>
                     <div class="col">
                         <mat-form-field>
-                            <input matInput placeholder="$123.90" required>
+                            <input matInput placeholder="$123.90" [(ngModel)]="price" name="price" required>
                         </mat-form-field>
                     </div>
                     <div class="col"></div>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="col">
                         <mat-form-field>
-                            <input matInput placeholder="Your name" required>
+                            <input matInput placeholder="Your name" [(ngModel)]="contactInformation" name="contactInformation" required>
                         </mat-form-field>
                     </div>
                     <div class="col">
@@ -102,7 +102,7 @@
                     </div>
                     <div class="col">
                         <mat-form-field>
-                            <input matInput placeholder="111 222 333">
+                            <input matInput placeholder="111 222 333" [(ngModel)]="phoneNumber" name="phoneNumber">
                         </mat-form-field>
                     </div>
                 </mat-card-content>
@@ -110,7 +110,7 @@
         </div>
         <div class="row mt-3">
             <div class="col">
-                <button mat-raised-button>Add auction</button>
+                <button mat-raised-button (click)="postAuction()">Add auction</button>
             </div>
         </div>
     </div>

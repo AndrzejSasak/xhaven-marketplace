@@ -4,10 +4,9 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class ImageDto {
+public class NewImageDto {
 
-    private Long id;
-    private String imagePath;
+    private String fileName;
     private MultipartFile file;
 
 }

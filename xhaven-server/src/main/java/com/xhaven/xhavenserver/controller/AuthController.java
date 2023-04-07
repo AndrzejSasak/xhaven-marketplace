@@ -1,8 +1,8 @@
 package com.xhaven.xhavenserver.controller;
 
-import com.xhaven.xhavenserver.dto.AuthenticationResponse;
-import com.xhaven.xhavenserver.dto.LoginRequest;
-import com.xhaven.xhavenserver.dto.RegisterRequest;
+import com.xhaven.xhavenserver.dto.auth.AuthenticationResponseDto;
+import com.xhaven.xhavenserver.dto.auth.LoginRequestDto;
+import com.xhaven.xhavenserver.dto.auth.RegisterRequestDto;
 import com.xhaven.xhavenserver.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +17,13 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest registerRequest) {
-        return ResponseEntity.ok(authService.register(registerRequest));
+    public ResponseEntity<AuthenticationResponseDto> register(@RequestBody RegisterRequestDto registerRequestDto) {
+        return ResponseEntity.ok(authService.register(registerRequestDto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok(authService.login(loginRequest));
+    public ResponseEntity<AuthenticationResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+        return ResponseEntity.ok(authService.login(loginRequestDto));
     }
 
 }
