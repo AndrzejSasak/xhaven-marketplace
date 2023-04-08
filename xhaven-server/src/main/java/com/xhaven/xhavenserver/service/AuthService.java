@@ -71,7 +71,9 @@ public class AuthService {
     }
 
     public void logout() {
-        CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
         revokeAllUserTokens(principal.getCurrentUser());
     }
 
