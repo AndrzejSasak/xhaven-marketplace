@@ -27,29 +27,19 @@ export class AuthService {
     if(!token) {
       return false;
     }
-  
+
     return !this.jwtHelperService.isTokenExpired(token);
   }
 
-  login(loginDto: LoginDto) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-      observe: 'response'
-    }
-
+  login(loginDto: LoginDto): Observable<TokenDto> {
     return this.http.post<TokenDto>(`${API_URL}/login`, loginDto, {headers: {skipIntercept: 'true'}});
   }
 
-  register(registerDto: RegisterDto) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-      observe: 'response'
-    }
+  logout(): Observable<any> {
+    return this.http.post(`${API_URL}/logout`, null);
+  }
 
+  register(registerDto: RegisterDto): Observable<TokenDto> {
     return this.http.post<TokenDto>(`${API_URL}/register`, registerDto, {headers: {skipIntercept: 'true'}});
   }
 

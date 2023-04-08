@@ -1,14 +1,27 @@
-<div class="container-fluid border">
+<div class="container-fluid">
     <div class="row">
         <div class="col">
             <mat-toolbar>
                 <!-- <img src="/assets/img/logo.png" class="img-fluid" alt="image"> -->
-                <span>XHaven</span>
+                <span (click)="homeRedirect()">XHaven</span>
                 <span class="example-spacer"></span>
+                <button *ngIf="isLoggedIn" mat-icon-button (click)="logoutRedirect()">
+                  <mat-icon>logout</mat-icon>
+                </button>
                 <button mat-icon-button (click)="profileRedirect()">
                     <mat-icon>person</mat-icon>
                 </button>
-                <button mat-icon-button>
+                <div *ngIf="isLoggedIn; then fullName else loginButton"></div>
+                <ng-template #fullName>
+                  <span (click)="profileRedirect()">
+                    {{currentUser.name}} {{currentUser.surname}}
+                  </span>
+                </ng-template>
+                <ng-template #loginButton>
+                  <button mat-raised-button (click)="loginRedirect()">Log in</button>
+                </ng-template>
+
+              <button mat-icon-button>
                     <mat-icon>favorite</mat-icon>
                 </button>
             </mat-toolbar>

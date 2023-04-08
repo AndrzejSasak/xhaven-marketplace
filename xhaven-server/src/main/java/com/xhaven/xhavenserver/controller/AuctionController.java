@@ -4,7 +4,6 @@ import com.xhaven.xhavenserver.dto.AuctionDto;
 import com.xhaven.xhavenserver.dto.NewAuctionDto;
 import com.xhaven.xhavenserver.model.entity.Auction;
 import com.xhaven.xhavenserver.service.AuctionService;
-import com.xhaven.xhavenserver.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;

@@ -1,12 +1,8 @@
-import { RoleEnum } from "./role";
 
 export interface User {
     id?: string;
     email?: string;
-    password?: string;
-    firstname?: string;
-    lastname?: string;
+    name?: string;
+    surname?: string;
     phoneNumber?: string;
-    role?: RoleEnum[];
-    token?: string;
 }

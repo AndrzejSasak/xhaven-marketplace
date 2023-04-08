@@ -13,9 +13,11 @@ import com.xhaven.xhavenserver.model.entity.Role;
 import com.xhaven.xhavenserver.model.entity.User;
 import com.xhaven.xhavenserver.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    @Transactional
     public AuthenticationResponseDto register(RegisterRequestDto registerRequestDto) {
         User newUser = User.builder()
                 .name(registerRequestDto.getName())
@@ -68,7 +71,8 @@ public class AuthService {
     }
 
     public void logout() {
-
+        CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        revokeAllUserTokens(principal.getCurrentUser());
     }
 
     private void saveUserToken(User user, String jwtToken) {
@@ -84,8 +88,10 @@ public class AuthService {
 
     private void revokeAllUserTokens(User user) {
         List<Token> validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
-        if (validUserTokens.isEmpty())
+        if (validUserTokens.isEmpty()) {
             return;
+        }
+
         validUserTokens.forEach(token -> {
             token.setExpired(true);
             token.setRevoked(true);

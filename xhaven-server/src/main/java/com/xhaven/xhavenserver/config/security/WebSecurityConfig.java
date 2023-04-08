@@ -1,6 +1,6 @@
 package com.xhaven.xhavenserver.config.security;
 
-import com.xhaven.xhavenserver.repository.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -39,8 +38,10 @@ public class WebSecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
-                .logoutUrl("/api/v1/auth/logout")
-                .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext()));
+                .logoutSuccessHandler(((request, response, authentication) -> {
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    SecurityContextHolder.clearContext();
+                }));
 
         return http.build();
     }

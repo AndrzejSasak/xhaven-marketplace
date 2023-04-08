@@ -33,10 +33,12 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { NewAuctionComponent } from './components/new-auction/new-auction.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { AuctionComponent } from './components/auction/auction.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'logout', component: LogoutComponent, canActivate: [AuthGuardService] },
   { path: 'home', component: HomeComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'new-auction', component: NewAuctionComponent, canActivate: [AuthGuardService] },
@@ -54,7 +56,8 @@ const appRoutes: Routes = [
     ProfileComponent,
     NewAuctionComponent,
     ImageUploadComponent,
-    AuctionComponent
+    AuctionComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
