@@ -1,5 +1,3 @@
-import { CategoryEnum } from "../category";
-
 export interface LoginDto {
     email?: string;
     password?: string;
@@ -48,4 +46,12 @@ export interface CategoryDto {
   id?: string;
   categoryName?: string;
   subcategories?: CategoryDto[];
+}
+
+export interface UserDto {
+  id?: string,
+  email?: string;
+  name?: string;
+  surname?: string,
+  phoneNumber?: string
 }
