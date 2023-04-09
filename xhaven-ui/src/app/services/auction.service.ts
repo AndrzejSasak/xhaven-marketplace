@@ -20,6 +20,10 @@ export class AuctionService {
     return this.httpClient.get<AuctionDto[]>(this.url);
   }
 
+  getAuctionById(id: string): Observable<AuctionDto> {
+    return this.httpClient.get<AuctionDto>(this.url + `/${id}`);
+  }
+
   getAuctionsByUserId(id: string): Observable<AuctionDto[]> {
     console.log(id);
     let requestParams = new HttpParams();

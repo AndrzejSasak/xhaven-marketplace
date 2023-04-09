@@ -26,4 +26,9 @@ export class HomeComponent implements OnInit {
   newAuctionRedirect() {
     this.router.navigate(['new-auction']);
   }
+
+  auctionRedirect(id?: string) {
+      this.router.navigate(['auctions/' + id]);
+  }
+
 }

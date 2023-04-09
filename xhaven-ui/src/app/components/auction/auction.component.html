@@ -1,1 +1,32 @@
-<p>auction works!</p>
+<app-navbar></app-navbar>
+<div class="container mt-5">
+  <div class="row gy-4">
+    <div class="col-lg-8">
+      <app-image-stepper>
+        <cdk-step>
+          <p> content</p>
+        </cdk-step>
+        <cdk-step>
+          <p> content2</p>
+        </cdk-step>
+      </app-image-stepper>
+    </div>
+    <div class="col-lg-4">
+      <mat-card class="h-100">
+        <mat-card-content>
+          <mat-label>Contact information: {{ currentAuction.contactInformation }}</mat-label>
+          <mat-label>Phone number: {{ currentAuction.phoneNumber }}</mat-label>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-8">
+      <mat-card class="h-100">
+        <mat-card-content>
+          <mat-label>{{ currentAuction.postedDate }}</mat-label>
+          <mat-label>Title: {{ currentAuction.title }} </mat-label>
+          <mat-label>Description: {{ currentAuction.description }} </mat-label>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

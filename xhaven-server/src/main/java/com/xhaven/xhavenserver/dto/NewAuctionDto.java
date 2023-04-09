@@ -12,6 +12,6 @@ public class NewAuctionDto {
     private BigDecimal price;
     private String contactInformation;
     private String phoneNumber;
-    private Long categoryId;
+    private CategoryDto category;
 
 }
