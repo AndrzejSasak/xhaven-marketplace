@@ -17,6 +17,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -54,12 +55,13 @@ public class AuthService {
     }
 
     public AuthenticationResponseDto login(LoginRequestDto loginRequestDto) {
-        authenticationManager.authenticate(
+        Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequestDto.getEmail(),
                         loginRequestDto.getPassword()
                 )
         );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         User user = userRepository.findByEmail(loginRequestDto.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException("User with this email not found!"));
         String jwtToken = jwtService.generateToken(new CustomUserDetails(user));
@@ -75,6 +77,7 @@ public class AuthService {
                 .getAuthentication()
                 .getPrincipal();
         revokeAllUserTokens(principal.getCurrentUser());
+        SecurityContextHolder.clearContext();
     }
 
     private void saveUserToken(User user, String jwtToken) {

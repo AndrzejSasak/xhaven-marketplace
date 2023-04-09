@@ -34,6 +34,7 @@ import { NewAuctionComponent } from './components/new-auction/new-auction.compon
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { AuctionComponent } from './components/auction/auction.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import {UserService} from "./services/user.service";
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -92,7 +93,8 @@ const appRoutes: Routes = [
       provide: JWT_OPTIONS,
       useValue: JWT_OPTIONS,
     },
-    JwtHelperService
+    JwtHelperService,
+    // UserService
   ],
   bootstrap: [AppComponent]
 })

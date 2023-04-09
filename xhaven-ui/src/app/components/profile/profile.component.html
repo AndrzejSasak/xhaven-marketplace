@@ -8,7 +8,29 @@
                 <mat-card-content>
                     <mat-tab-group>
                         <mat-tab label="Messages"> Content 1</mat-tab>
-                        <mat-tab label="Your auctions"> Content 2</mat-tab>
+                        <mat-tab label="Your auctions">
+                          <mat-card>
+                            <mat-card-content>
+                              <h2>Search results</h2>
+                              <mat-paginator
+                                [length]="length"
+                                [pageSize]="10"
+                                [pageSizeOptions]="[5, 10, 25, 100]"
+                                aria-label="Select page">
+                              </mat-paginator>
+                              <div *ngFor="let auction of userAuctionList" class="auction">
+                                <mat-card class="border">
+                                  <mat-card-content>
+                                    <img mat-card-image src="/assets/img/logo.png" class="auction-img">
+                                    <p>{{ auction.title }}</p>
+                                    <p>{{ auction.description }}</p>
+                                    <p>{{ auction.postedDate }}</p>
+                                  </mat-card-content>
+                                </mat-card>
+                              </div>
+                            </mat-card-content>
+                          </mat-card>
+                        </mat-tab>
                         <mat-tab label="Followed auctions"> Content 3</mat-tab>
                     </mat-tab-group>
                 </mat-card-content>

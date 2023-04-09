@@ -40,7 +40,7 @@ public class WebSecurityConfig {
                 .logout()
                 .logoutSuccessHandler(((request, response, authentication) -> {
                     response.setStatus(HttpServletResponse.SC_OK);
-                    SecurityContextHolder.clearContext();
+//                    SecurityContextHolder.clearContext();
                 }));
 
         return http.build();

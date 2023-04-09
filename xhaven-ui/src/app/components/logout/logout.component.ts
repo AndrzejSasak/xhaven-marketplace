@@ -19,10 +19,11 @@ export class LogoutComponent {
 
   logout() {
     this.authService.logout().subscribe(response => {
-      this.userService.removeCurrentUser();
       localStorage.removeItem('jwt');
+      this.userService.removeCurrentUser();
       this.router.navigate(['home']);
     });
+    console.log(this.userService.getCurrentUser());
   }
 
   redirectBack() {

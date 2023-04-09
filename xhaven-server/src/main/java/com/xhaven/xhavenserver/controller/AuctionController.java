@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -28,11 +29,24 @@ public class AuctionController {
     }
 
     @GetMapping
-    public List<AuctionDto> getAllAuctions() {
-        return auctionService.getAllAuctions().stream()
-                .map(auction -> modelMapper.map(auction, AuctionDto.class))
-                .toList();
+    public List<AuctionDto> getAuctionsByUserId(@RequestParam Optional<Long> userId) {
+        if(userId.isPresent()) {
+            return auctionService.getAuctionsByUserId(userId.get()).stream()
+                    .map(auction -> modelMapper.map(auction, AuctionDto.class))
+                    .toList();
+        } else {
+            return auctionService.getAllAuctions().stream()
+                    .map(auction -> modelMapper.map(auction, AuctionDto.class))
+                    .toList();
+        }
     }
+
+//    @GetMapping
+//    public List<AuctionDto> getAllAuctions() {
+//        return auctionService.getAllAuctions().stream()
+//                .map(auction -> modelMapper.map(auction, AuctionDto.class))
+//                .toList();
+//    }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void postAuction(@RequestParam MultipartFile[] files, @RequestPart NewAuctionDto newAuctionDto) {
