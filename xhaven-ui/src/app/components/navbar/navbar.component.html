@@ -14,7 +14,7 @@
                 <div *ngIf="isLoggedIn; then fullName else loginButton"></div>
                 <ng-template #fullName>
                   <span (click)="profileRedirect()">
-                    {{currentUser.name}} {{currentUser.surname}}
+                    {{currentUser?.name}} {{currentUser?.surname}}
                   </span>
                 </ng-template>
                 <ng-template #loginButton>

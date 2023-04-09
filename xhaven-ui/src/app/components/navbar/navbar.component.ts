@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {AuthService} from "../../services/auth.service";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
+import {delay, Subject} from "rxjs";
 
 @Component({
   selector: 'app-navbar',
@@ -12,11 +13,12 @@ import {User} from "../../models/user";
 export class NavbarComponent implements OnInit {
 
   constructor(private router: Router,
-              private userService: UserService,
-              private authService: AuthService) {}
+              private authService: AuthService,
+              private userService: UserService ) {
+  }
 
-  isLoggedIn: boolean; //@Input()??
-  currentUser: User;
+  isLoggedIn: boolean = false;
+  currentUser: User | null;
 
   homeRedirect() {
     this.router.navigate(['home']);
@@ -32,13 +34,14 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isAuthenticated();
-    if(this.isLoggedIn) {
-      this.userService.getCurrentUser()
-        .subscribe((user: User) => {
-          this.currentUser = user;
-        });
-    }
+    this.userService.getCurrentUser().subscribe(
+      (user: User | null) => {
+        this.currentUser = user;
+        this.isLoggedIn = this.authService.isAuthenticated();
+        console.log(user?.id);
+      }
+    );
+
   }
 
 }
