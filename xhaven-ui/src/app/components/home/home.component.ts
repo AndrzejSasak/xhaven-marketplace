@@ -26,4 +26,5 @@ export class HomeComponent implements OnInit {
   newAuctionRedirect() {
     this.router.navigate(['new-auction']);
   }
+
 }
