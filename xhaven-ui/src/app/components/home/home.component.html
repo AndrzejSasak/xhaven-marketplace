@@ -1,9 +1,11 @@
-<div class="container">
-    <div class="row-lg-12">
-        <div class="col-lg-12">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
             <app-navbar></app-navbar>
         </div>
     </div>
+</div>
+<div class="container">
     <div class="row">
         <div class="col">
             <div class="d-flex justify-content-center ">
@@ -77,8 +79,6 @@
             </div>
         </div>
     </mat-card>
-
-
     <mat-card id="search-results">
         <mat-card-content>
             <h2>Search results</h2>
@@ -88,10 +88,10 @@
                     [pageSizeOptions]="[5, 10, 25, 100]"
                     aria-label="Select page">
                     </mat-paginator>
-            <div *ngFor="let auction of auctionList" class="auction">
+            <div *ngFor="let auction of auctionList" class="auction" (click)="auctionRedirect(auction.id)">
                 <mat-card class="border">
                     <mat-card-content>
-                        <img mat-card-image src="/assets/img/logo.png" class="auction-img">
+                        <img mat-card-image src="/assets/img/logo.png" class="auction-img" alt="image">
                         <p>{{ auction.title }}</p>
                         <p>{{ auction.description }}</p>
                         <p>{{ auction.postedDate }}</p>
@@ -100,5 +100,6 @@
             </div>
         </mat-card-content>
     </mat-card>
-
 </div>
+
+

@@ -1,117 +1,124 @@
-<form>
-    <div class="container">
-        <div class="row">
-            <app-navbar></app-navbar>
-        </div>
-        <div class="row mt-3">
-            <mat-card>
-                <mat-card-content>
-                    <div class="col">
-                        <mat-label>Title</mat-label>
-                    </div>
-                    <div class="col">
-                        <mat-form-field>
-                            <input matInput [(ngModel)]="title" name="title" placeholder="Title" required>
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-label>Description</mat-label>
-                    </div>
-                    <div class="col">
-                        <mat-form-field>
-                            <textarea maxLength="1024" matInput [(ngModel)]="description" name="description" placeholder="Description"></textarea>
-                        </mat-form-field>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
-        <div class="row mt-3">
-           <mat-card>
-                <mat-card-content>
-                    <mat-label>Category</mat-label>
-                    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="category-tree">
-                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-                            <button mat-stroked-button (click)="setCategory(node)">
-                                {{node.categoryName}}
-                            </button>
-                        </mat-tree-node>
-                        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-                            <div class="mat-tree-node">
-                              <button mat-icon-button matTreeNodeToggle
-                                      [attr.aria-label]="'Toggle ' + node.categoryName">
-                                <mat-icon class="mat-icon-rtl-mirror">
-                                  {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                                </mat-icon>
-                              </button>
-                              {{node.categoryName}}
-                            </div>
-                            <div [class.category-tree-invisible]="!treeControl.isExpanded(node)"
-                                role="group">
-                              <ng-container matTreeNodeOutlet></ng-container>
-                          </div>
-                        </mat-nested-tree-node>
-                    </mat-tree>
-                    <p>Chosen category: {{chosenCategoryName}}</p>
-                </mat-card-content>
-           </mat-card>
-        </div>
-        <div class="row mt-3">
-            <mat-card>
-                <mat-card-content>
-                    <mat-label>Attach photos</mat-label>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col" *ngFor="let number of [1,2,3,4]">
-                                <app-image-upload [componentId]="number" (onImageUploaded)="uploadImage($event)"></app-image-upload>
-                            </div>
-                        </div>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
-        <div class="row mt-3">
-            <mat-card>
-                <mat-card-content>
-                    <div class="col">
-                        <mat-label>Price</mat-label>
-                    </div>
-                    <div class="col">
-                        <mat-form-field>
-                            <input matInput placeholder="$123.90" [(ngModel)]="price" name="price" required>
-                        </mat-form-field>
-                    </div>
-                    <div class="col"></div>
-                    <div class="col"></div>
-                    <div class="col"></div>
-                </mat-card-content>
-            </mat-card>
-        </div>
-        <div class="row mt-3">
-            <mat-card>
-                <mat-card-content>
-                    <div class="col">
-                        <mat-label>Contact information</mat-label>
-                    </div>
-                    <div class="col">
-                        <mat-form-field>
-                            <input matInput placeholder="Your name" [(ngModel)]="contactInformation" name="contactInformation" required>
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-label>Phone number</mat-label>
-                    </div>
-                    <div class="col">
-                        <mat-form-field>
-                            <input matInput placeholder="111 222 333" [(ngModel)]="phoneNumber" name="phoneNumber">
-                        </mat-form-field>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
-        <div class="row mt-3">
-            <div class="col">
-                <button mat-raised-button (click)="postAuction()">Add auction</button>
-            </div>
-        </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <app-navbar></app-navbar>
     </div>
-</form>
+  </div>
+</div>
+
+<div class="container">
+  <form>
+    <div class="row mt-3">
+      <mat-card>
+        <mat-card-content>
+          <div class="col">
+            <mat-label>Title</mat-label>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <input matInput [(ngModel)]="title" name="title" placeholder="Title" required>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-label>Description</mat-label>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <textarea maxLength="1024" matInput [(ngModel)]="description" name="description"
+                        placeholder="Description"></textarea>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="row mt-3">
+      <mat-card>
+        <mat-card-content>
+          <mat-label>Category</mat-label>
+          <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="category-tree">
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+              <button mat-stroked-button (click)="setCategory(node)">
+                {{node.categoryName}}
+              </button>
+            </mat-tree-node>
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+              <div class="mat-tree-node">
+                <button mat-icon-button matTreeNodeToggle
+                        [attr.aria-label]="'Toggle ' + node.categoryName">
+                  <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                  </mat-icon>
+                </button>
+                {{node.categoryName}}
+              </div>
+              <div [class.category-tree-invisible]="!treeControl.isExpanded(node)"
+                   role="group">
+                <ng-container matTreeNodeOutlet></ng-container>
+              </div>
+            </mat-nested-tree-node>
+          </mat-tree>
+          <p>Chosen category: {{chosenCategoryName}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="row mt-3">
+      <mat-card>
+        <mat-card-content>
+          <mat-label>Attach photos</mat-label>
+          <div class="container">
+            <div class="row">
+              <div class="col" *ngFor="let number of [1,2,3,4]">
+                <app-image-upload [componentId]="number" (onImageUploaded)="uploadImage($event)"></app-image-upload>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="row mt-3">
+      <mat-card>
+        <mat-card-content>
+          <div class="col">
+            <mat-label>Price</mat-label>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <input matInput placeholder="$123.90" [(ngModel)]="price" name="price" required>
+            </mat-form-field>
+          </div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="row mt-3">
+      <mat-card>
+        <mat-card-content>
+          <div class="col">
+            <mat-label>Contact information</mat-label>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <input matInput placeholder="Your name" [(ngModel)]="contactInformation" name="contactInformation"
+                     required>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-label>Phone number</mat-label>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <input matInput placeholder="111 222 333" [(ngModel)]="phoneNumber" name="phoneNumber">
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <button mat-raised-button (click)="postAuction()">Add auction</button>
+      </div>
+    </div>
+  </form>
+</div>
