@@ -10,8 +10,9 @@ import {AuctionService} from "../../services/auction.service";
 export class AuctionComponent implements OnInit {
 
 
+  isFollowed = false;
   currentAuction: AuctionDto;   //TODO: change to Auction class
-  currentAuctionId = '52';
+  currentAuctionId = '1';
 
   constructor(private auctionService: AuctionService) {
   }
