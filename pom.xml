@@ -18,4 +18,6 @@
         <module>xhaven-ui</module>
     </modules>
 
+    <packaging>pom</packaging>
+
 </project>

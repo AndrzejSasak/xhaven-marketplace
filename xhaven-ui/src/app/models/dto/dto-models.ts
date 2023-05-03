@@ -38,8 +38,8 @@ export interface NewAuctionDto {
 
 export interface ImageDto {
     id?: string;
-    imagePath?: string;
-    file?: FormData;
+    imageName?: string;
+    fileBytes: Blob;
 }
 
 export interface CategoryDto {

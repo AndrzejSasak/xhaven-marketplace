@@ -9,12 +9,11 @@
   <div class="row gy-4">
     <div class="col-lg-8">
       <app-image-stepper>
-        <cdk-step>
-          <img src="/assets/img/logo.png" class="auction-img" alt="image">
-        </cdk-step>
-        <cdk-step>
-          <img src="/assets/img/stock.jpg" class="auction-img" alt="image">
-        </cdk-step>
+        <div *ngFor="let imageURL of imageURLs">
+          <cdk-step>
+            <img [src]="imageURL" class="auction-img" alt="image">
+          </cdk-step>
+        </div>
       </app-image-stepper>
     </div>
     <div class="col-lg-4">
