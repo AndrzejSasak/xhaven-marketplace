@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,8 +21,9 @@ public class AuctionService {
     private final UserService userService;
 
     public Auction getAuctionById(Long auctionId) {
-        return auctionRepository.findById(auctionId)
+        Auction auction = auctionRepository.findById(auctionId)
                 .orElseThrow(() -> new IllegalArgumentException("Auction not found"));
+        return imageService.getAuctionWithImageFiles(auction);
     }
 
     public List<Auction> getAuctionsByUserId(Long userId) {
@@ -38,11 +40,25 @@ public class AuctionService {
         imageService.saveImagesToFilesystem(images);
         List<Image> imageEntities = imageService.createImageEntites(images);
 
-        auction.setPostedDateTime(LocalDateTime.now());
+        auction.setPostedAt(LocalDateTime.now());
         auction.setActive(true);
         auction.setImages(imageEntities);
         auction.setOwner(userService.getCurrentUser());
 
         auctionRepository.save(auction);
     }
+
+    public List<Auction> getAuctions(Optional<Long> userId) {
+        if(userId.isPresent()) {
+            List<Auction> auctions = getAuctionsByUserId(userId.get());
+
+
+
+            return auctions;
+        } else {
+            return getAllAuctions();
+        }
+    }
+
+
 }

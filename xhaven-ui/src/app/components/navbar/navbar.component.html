@@ -2,8 +2,7 @@
     <div class="row">
         <div class="col">
             <mat-toolbar>
-                <!-- <img src="/assets/img/logo.png" class="img-fluid" alt="image"> -->
-                <span (click)="homeRedirect()">XHaven</span>
+                <img (click)="homeRedirect()" src="/assets/img/xhaven.png" alt="image">
                 <span class="example-spacer"></span>
                 <button *ngIf="isLoggedIn" mat-icon-button (click)="logoutRedirect()">
                   <mat-icon>logout</mat-icon>

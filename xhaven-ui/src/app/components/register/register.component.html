@@ -1,7 +1,8 @@
-<div class="container">
+<div class="register-page">
+  <div class="container">
     <div class="row vh-100">
       <div class="col-6 align-self-center">
-        <img src="/assets/img/logo.png" class="img-fluid" alt="image">
+        <img src="/assets/img/logo.jpeg" class="img-fluid" alt="image">
       </div>
       <div class="col-6 align-self-center">
         <mat-card>
@@ -10,39 +11,39 @@
               <mat-card-header>Register</mat-card-header>
               <mat-form-field>
                 <input matInput placeholder="Name" [(ngModel)]="name" name="name" required>
-              <mat-error>
-                Please provide a valid first name
-              </mat-error>
+                <mat-error>
+                  Please provide a valid first name
+                </mat-error>
               </mat-form-field>
               <mat-form-field>
                 <input matInput placeholder="Surname" [(ngModel)]="surname" name="surname" required>
-              <mat-error>
-                Please provide a valid surname
-              </mat-error>
+                <mat-error>
+                  Please provide a valid surname
+                </mat-error>
               </mat-form-field>
               <mat-form-field>
                 <input matInput placeholder="Email" [(ngModel)]="email" name="email" required>
-              <mat-error>
-                Please provide a valid email
-              </mat-error>
+                <mat-error>
+                  Please provide a valid email
+                </mat-error>
               </mat-form-field>
               <mat-form-field>
                 <input matInput placeholder="Phone number" [(ngModel)]="phoneNumber" name="phoneNumber" required>
-              <mat-error>
-                Please provide a valid phone number
-              </mat-error>
+                <mat-error>
+                  Please provide a valid phone number
+                </mat-error>
               </mat-form-field>
               <mat-form-field>
                 <input matInput placeholder="Password" [(ngModel)]="password" name="password" required>
-              <mat-error>
-                Please provide a valid password
-              </mat-error>
+                <mat-error>
+                  Please provide a valid password
+                </mat-error>
               </mat-form-field>
               <mat-form-field>
                 <input matInput placeholder="Confirm password" [(ngModel)]="confirmPassword" name="confirmPassword" required>
-              <mat-error>
-                Please provide password confirmation
-              </mat-error>
+                <mat-error>
+                  Please provide password confirmation
+                </mat-error>
               </mat-form-field>
               <button mat-raised-button color="primary" (click)="register()">Register</button>
             </form>
@@ -51,3 +52,4 @@
       </div>
     </div>
   </div>
+</div>

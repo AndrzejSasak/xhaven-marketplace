@@ -47,8 +47,8 @@ public class Auction {
     @JsonIgnore
     private User owner;
 
-    @Column(name = "POSTED_DATE_TIME")
-    private LocalDateTime postedDateTime;
+    @Column(name = "POSTED_AT")
+    private LocalDateTime postedAt;
 
     private boolean isActive;
 

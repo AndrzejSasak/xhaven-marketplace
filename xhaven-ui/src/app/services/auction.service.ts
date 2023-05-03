@@ -20,7 +20,7 @@ export class AuctionService {
     return this.httpClient.get<AuctionDto[]>(this.url);
   }
 
-  getAuctionById(id: string): Observable<AuctionDto> {
+  getAuctionById(id: string | null): Observable<AuctionDto> {
     return this.httpClient.get<AuctionDto>(this.url + `/${id}`);
   }
 
