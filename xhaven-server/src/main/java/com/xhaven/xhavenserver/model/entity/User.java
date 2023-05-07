@@ -40,10 +40,21 @@ public class User {
     @OneToMany(mappedBy = "owner")
     private List<Auction> auctions;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Auction> favoriteAuctions;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_ROLE",
             joinColumns = @JoinColumn(name = "ID_USER"),
             inverseJoinColumns = @JoinColumn(name = "ID_ROLE"))
     private Set<Role> roles;
+
+    public void addFavoriteAuction(Auction auction) {
+        this.favoriteAuctions.add(auction);
+    }
+
+    public void removeFavoriteAuction(Auction auction) {
+        this.favoriteAuctions.remove(auction);
+    }
 
 }

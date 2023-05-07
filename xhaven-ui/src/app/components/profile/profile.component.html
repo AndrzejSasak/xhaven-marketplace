@@ -6,40 +6,103 @@
   </div>
 </div>
 <div class="container mt-3">
-    <div class="row gy-5">
-        <div class="col-lg-12">
-            <mat-card>
+  <div class="row gy-5">
+    <div class="col-lg-12">
+      <mat-card>
+        <mat-card-content>
+          <mat-tab-group>
+            <mat-tab label="Messages"> Content 1</mat-tab>
+            <mat-tab label="Your auctions">
+              <mat-card>
                 <mat-card-content>
-                    <mat-tab-group>
-                        <mat-tab label="Messages"> Content 1</mat-tab>
-                        <mat-tab label="Your auctions">
-                          <mat-card>
-                            <mat-card-content>
-                              <h2>Search results</h2>
-                              <mat-paginator
-                                [length]="length"
-                                [pageSize]="10"
-                                [pageSizeOptions]="[5, 10, 25, 100]"
-                                aria-label="Select page">
-                              </mat-paginator>
-                              <div *ngFor="let auction of userAuctionList" class="auction">
-                                <mat-card class="border">
-                                  <mat-card-content>
-                                    <img mat-card-image src="/assets/img/logo.png" class="auction-img">
-                                    <p>{{ auction.title }}</p>
-                                    <p>{{ auction.description }}</p>
-                                    <p>{{ auction.postedDate }}</p>
-                                  </mat-card-content>
-                                </mat-card>
-                              </div>
-                            </mat-card-content>
-                          </mat-card>
-                        </mat-tab>
-                        <mat-tab label="Followed auctions"> Content 3</mat-tab>
-                    </mat-tab-group>
+                  <h2>Search results</h2>
+                  <mat-paginator
+                    [length]="userAuctionsLength"
+                    [pageSize]="10"
+                    [pageSizeOptions]="[5, 10, 25, 100]"
+                    aria-label="Select page">
+                  </mat-paginator>
+                  <div *ngFor="let auction of userAuctions" class="auction">
+                    <mat-card class="border">
+                      <mat-card-content>
+                        <div class="row">
+                          <div class="col-lg-4 d-flex justify-content-start align-items-center" (click)="auctionRedirect(auction.id)">
+                            <img mat-card-image [src]="auction.thumbnail" class="img-fluid" alt="image">
+                          </div>
+                          <div class="col-lg-6" (click)="auctionRedirect(auction.id)">
+                            <h1>{{ auction.title }}</h1>
+                            <h2>${{ auction.price }}</h2>
+                            <p>{{ auction.description }}</p> <!-- doesnt work -->
+                            <p>{{ auction.postedAt }}</p>
+                          </div>
+                          <div class="col-lg-2">
+                            <div *ngIf="auction.favorite; then favorite else notFavorite"></div>
+                            <ng-template #favorite>
+                              <button mat-icon-button (click)="removeFromFavorites(auction)">
+                                <mat-icon>favorite</mat-icon>
+                              </button>
+                            </ng-template>
+                            <ng-template #notFavorite>
+                              <button mat-icon-button (click)="addToFavorites(auction)">
+                                <mat-icon>favorite_border</mat-icon>
+                              </button>
+                            </ng-template>
+                          </div>
+                        </div>
+                      </mat-card-content>
+                    </mat-card>
+                  </div>
                 </mat-card-content>
-            </mat-card>
-        </div>
+              </mat-card>
+            </mat-tab>
+            <mat-tab label="Followed auctions">
+              <mat-card>
+                <mat-card-content>
+                  <h2>Search results</h2>
+                  <mat-paginator
+                    [length]="favoriteAuctionsLength"
+                    [pageSize]="10"
+                    [pageSizeOptions]="[5, 10, 25, 100]"
+                    aria-label="Select page">
+                  </mat-paginator>
+                  <div *ngFor="let auction of favoriteAuctions">
+                    <mat-card class="border">
+                      <mat-card-content>
+                        <div class="row">
+                          <div class="col-lg-4 d-flex justify-content-start align-items-center"
+                               (click)="auctionRedirect(auction.id)">
+                            <img mat-card-image [src]="auction.thumbnail" class="img-fluid" alt="image">
+                          </div>
+                          <div class="col-lg-6" (click)="auctionRedirect(auction.id)">
+                            <h1>{{ auction.title }}</h1>
+                            <h2>${{ auction.price }}</h2>
+                            <p>{{ auction.description }}</p> <!-- doesnt work -->
+                            <p>{{ auction.postedAt }}</p>
+                          </div>
+                          <div class="col-lg-2">
+                            <div *ngIf="auction.favorite; then favorite else notFavorite"></div>
+                            <ng-template #favorite>
+                              <button mat-icon-button (click)="removeFromFavorites(auction)">
+                                <mat-icon>favorite</mat-icon>
+                              </button>
+                            </ng-template>
+                            <ng-template #notFavorite>
+                              <button mat-icon-button (click)="addToFavorites(auction)">
+                                <mat-icon>favorite_border</mat-icon>
+                              </button>
+                            </ng-template>
+                          </div>
+                        </div>
+                      </mat-card-content>
+                    </mat-card>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card>
     </div>
+  </div>
 </div>
 

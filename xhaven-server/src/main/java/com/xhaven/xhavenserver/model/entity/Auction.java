@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "AUCTION")
@@ -50,6 +51,21 @@ public class Auction {
     @Column(name = "POSTED_AT")
     private LocalDateTime postedAt;
 
-    private boolean isActive;
+    @Column(name = "IS_ACTIVE")
+    private Boolean isActive;
 
+    @Transient
+    private Boolean isFavorite;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Auction auction)) return false;
+        return Objects.equals(id, auction.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
