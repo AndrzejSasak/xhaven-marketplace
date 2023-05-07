@@ -1,105 +1,125 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <app-navbar></app-navbar>
-        </div>
+  <div class="row">
+    <div class="col">
+      <app-navbar></app-navbar>
     </div>
+  </div>
 </div>
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <div class="d-flex justify-content-center ">
-                <button mat-flat-button id="add-auction-btn" (click)="newAuctionRedirect()">Add auction</button>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col">
+      <div class="d-flex justify-content-center ">
+        <button mat-flat-button id="add-auction-btn" (click)="newAuctionRedirect()">Add auction</button>
+      </div>
     </div>
-    <mat-card>
-        <div class="row gy-2 d-flex align-items-center">
-            <div class="col col-lg-8">
-                <mat-card-content class="">
-                    <form>
-                        <mat-form-field>
-                            <input matInput placeholder="Search for anything" id="search-field">
-                        </mat-form-field>
-                    </form>
-                </mat-card-content>
-            </div>
-            <div class="col col-lg-4">
-                <mat-card-content>
-                    <button mat-raised-button color="accent" id="search-btn">
-                        Search
-                        <mat-icon>search</mat-icon>
-                    </button>
-                </mat-card-content>
-            </div>
-            <div class="col">
-                <mat-accordion>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Categories
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div class="container">
-                            <div class="row gy-2">
-                                <div class="col-lg-3 d-flex justify-content-center">
-                                    <button mat-raised-button color="accent" class="category-btn">Automotive</button>
-                                </div>
-                                <div class="col-lg-3 d-flex justify-content-center">
-                                    <button mat-raised-button color="accent" class="category-btn">Real estate</button>
-                                </div>
-                                <div class="col-lg-3 d-flex justify-content-center">
-                                    <button mat-raised-button color="accent" class="category-btn">Electronics</button>
-                                </div>
-                                <div class="col-lg-3 d-flex justify-content-center">
-                                    <button mat-raised-button color="accent" class="category-btn">Fashion</button>
-                                </div>
-                                <div class="col-lg-3 d-flex justify-content-center">
-                                    <button mat-raised-button color="accent" class="category-btn">Animals</button>
-                                </div>
-                                <div class="col-lg-3 d-flex justify-content-center">
-                                    <button mat-raised-button color="accent" class="category-btn">For children</button>
-                                </div>
-                                <div class="col-lg-3 d-flex justify-content-center">
-                                    <button mat-raised-button color="accent" class="category-btn">Sports and hobbies</button>
-                                </div>
-                                <div class="col-lg-3 d-flex justify-content-center">
-                                    <button mat-raised-button color="accent" class="category-btn">Music</button>
-                                </div>
-                                <div class="col-lg-3 d-flex justify-content-center">
-                                    <button mat-raised-button color="accent" class="category-btn">Health</button>
-                                </div>
-                                <div class="col-lg-3 d-flex justify-content-center">
-                                    <button mat-raised-button color="accent" class="category-btn">Bicycles</button>
-                                </div>
-                            </div>
-                        </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
-            </div>
-        </div>
-    </mat-card>
-    <mat-card id="search-results">
-        <mat-card-content>
-            <h2>Search results</h2>
-            <mat-paginator
-                    [length]="length"
-                    [pageSize]="10"
-                    [pageSizeOptions]="[5, 10, 25, 100]"
-                    aria-label="Select page">
-                    </mat-paginator>
-            <div *ngFor="let auction of auctionList" class="auction" (click)="auctionRedirect(auction.id)">
-                <mat-card class="border">
-                    <mat-card-content>
-                        <img mat-card-image src="/assets/img/logo.png" class="auction-img" alt="image">
-                        <p>{{ auction.title }}</p>
-                        <p>{{ auction.description }}</p>
-                        <p>{{ auction.postedDate }}</p>
-                    </mat-card-content>
-                </mat-card>
-            </div>
+  </div>
+  <mat-card>
+    <div class="row gy-2 d-flex align-items-center">
+      <div class="col col-lg-8">
+        <mat-card-content class="">
+          <form>
+            <mat-form-field>
+              <input matInput placeholder="Search for anything" id="search-field">
+            </mat-form-field>
+          </form>
         </mat-card-content>
-    </mat-card>
+      </div>
+      <div class="col col-lg-4">
+        <mat-card-content>
+          <button mat-raised-button color="accent" id="search-btn">
+            Search
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-card-content>
+      </div>
+      <div class="col">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Categories
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="container">
+              <div class="row gy-2">
+                <div class="col-lg-3 d-flex justify-content-center">
+                  <button mat-raised-button color="accent" class="category-btn">Automotive</button>
+                </div>
+                <div class="col-lg-3 d-flex justify-content-center">
+                  <button mat-raised-button color="accent" class="category-btn">Real estate</button>
+                </div>
+                <div class="col-lg-3 d-flex justify-content-center">
+                  <button mat-raised-button color="accent" class="category-btn">Electronics</button>
+                </div>
+                <div class="col-lg-3 d-flex justify-content-center">
+                  <button mat-raised-button color="accent" class="category-btn">Fashion</button>
+                </div>
+                <div class="col-lg-3 d-flex justify-content-center">
+                  <button mat-raised-button color="accent" class="category-btn">Animals</button>
+                </div>
+                <div class="col-lg-3 d-flex justify-content-center">
+                  <button mat-raised-button color="accent" class="category-btn">For children</button>
+                </div>
+                <div class="col-lg-3 d-flex justify-content-center">
+                  <button mat-raised-button color="accent" class="category-btn">Sports and hobbies</button>
+                </div>
+                <div class="col-lg-3 d-flex justify-content-center">
+                  <button mat-raised-button color="accent" class="category-btn">Music</button>
+                </div>
+                <div class="col-lg-3 d-flex justify-content-center">
+                  <button mat-raised-button color="accent" class="category-btn">Health</button>
+                </div>
+                <div class="col-lg-3 d-flex justify-content-center">
+                  <button mat-raised-button color="accent" class="category-btn">Bicycles</button>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card id="search-results">
+    <mat-card-content>
+      <h2>Search results</h2>
+      <mat-paginator
+        [length]="auctionsLength"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page">
+      </mat-paginator>
+      <div *ngFor="let auction of auctions">
+        <mat-card class="border">
+          <mat-card-content>
+            <div class="row">
+              <div class="col-lg-4 d-flex justify-content-start align-items-center" (click)="auctionRedirect(auction.id)">
+                <img mat-card-image [src]="auction.thumbnail" class="img-fluid" alt="image">
+              </div>
+              <div class="col-lg-6" (click)="auctionRedirect(auction.id)">
+                <h1>{{ auction.title }}</h1>
+                <h2>${{ auction.price }}</h2>
+                <p>{{ auction.description }}</p> <!-- doesnt work -->
+                <p>{{ auction.postedAt }}</p>
+              </div>
+              <div class="col-lg-2">
+                <div *ngIf="auction.favorite; then favorite else notFavorite"></div>
+                <ng-template #favorite>
+                  <button mat-icon-button (click)="removeFromFavorites(auction)">
+                    <mat-icon>favorite</mat-icon>
+                  </button>
+                </ng-template>
+                <ng-template #notFavorite>
+                  <button mat-icon-button (click)="addToFavorites(auction)">
+                    <mat-icon>favorite_border</mat-icon>
+                  </button>
+                </ng-template>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 

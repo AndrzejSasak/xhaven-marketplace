@@ -1,8 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AuctionDto, ImageDto} from "../../models/dto/dto-models";
 import {AuctionService} from "../../services/auction.service";
 import {ActivatedRoute} from "@angular/router";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {UserService} from "../../services/user.service";
+import {User} from "../../models/user";
+import {mergeMap} from "rxjs";
 
 @Component({
   selector: 'app-auction',
@@ -11,13 +14,14 @@ import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 })
 export class AuctionComponent implements OnInit {
 
-  isFollowed = false;
   currentAuction: AuctionDto;   //TODO: change to Auction class
   imageURLs: SafeUrl[] = [];
 
   constructor(private auctionService: AuctionService,
+              private userService: UserService,
               private activatedRoute: ActivatedRoute,
-              private sanitizer: DomSanitizer) {
+              private sanitizer: DomSanitizer,
+              private changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -25,14 +29,31 @@ export class AuctionComponent implements OnInit {
       (auction: AuctionDto) => {
         auction.images?.forEach((image: ImageDto) => {
           const imageURL: SafeUrl = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' + image.fileBytes);
-
           this.imageURLs = this.imageURLs.concat(imageURL);
         })
-
         this.currentAuction = auction;
-        console.log(this.imageURLs)
+        this.currentAuction.favorite;
+        console.log(auction)
       }
     );
-
   }
+
+  addToFavorites() {
+    this.userService.getCurrentUser().pipe(
+      mergeMap((user: User) =>
+        this.userService.addAuctionToFavorites(this.currentAuction.id || '', user.id || ''))
+    ).subscribe(value => {
+      this.currentAuction.favorite = true;
+    })
+  }
+
+  removeFromFavorites() {
+    this.userService.getCurrentUser().pipe(
+      mergeMap((user: User) =>
+        this.userService.removeAuctionFromFavorites(this.currentAuction.id || '', user.id || ''))
+    ).subscribe(value => {
+      this.currentAuction.favorite = false;
+    })
+  }
+
 }

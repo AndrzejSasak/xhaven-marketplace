@@ -23,17 +23,28 @@ export interface AuctionDto {
     images?: ImageDto[];
     postedDate?: string;
     price?: string;
-    contactInformation?: string,
-    phoneNumber?: string
+    contactInformation?: string;
+    phoneNumber?: string;
+    favorite: boolean;
 }
 
 export interface NewAuctionDto {
-  title?: string,
-  description?: string,
-  category?: CategoryDto,
-  price?: string,
-  contactInformation?: string,
-  phoneNumber?: string
+  title?: string;
+  description?: string;
+  category?: CategoryDto;
+  price?: string;
+  contactInformation?: string;
+  phoneNumber?: string;
+}
+
+export interface ThumbnailAuctionDto {
+  id?: string;
+  title?: string;
+  description?: string;
+  price?: string;
+  thumbnail?: ImageDto;
+  postedAt: string;
+  favorite: boolean;
 }
 
 export interface ImageDto {
@@ -49,9 +60,9 @@ export interface CategoryDto {
 }
 
 export interface UserDto {
-  id?: string,
+  id?: string;
   email?: string;
   name?: string;
-  surname?: string,
-  phoneNumber?: string
+  surname?: string;
+  phoneNumber?: string;
 }

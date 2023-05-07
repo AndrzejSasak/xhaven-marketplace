@@ -13,6 +13,7 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
+    //TODO add caching
     public List<Category> getAllCategories() {
         return categoryRepository.findAllByParentCategoryEmpty();
     }

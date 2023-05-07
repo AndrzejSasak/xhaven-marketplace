@@ -11,7 +11,7 @@
       <app-image-stepper>
         <div *ngFor="let imageURL of imageURLs">
           <cdk-step>
-            <img [src]="imageURL" class="auction-img" alt="image">
+            <img [src]="imageURL" class="img-fluid" alt="image">
           </cdk-step>
         </div>
       </app-image-stepper>
@@ -51,11 +51,16 @@
           <div class="d-grid gap-3">
             <div>
               <button mat-icon-button>
-                <div *ngIf="isFollowed; else notFollowed">
-                  <mat-icon>favorite</mat-icon>
-                </div>
-                <ng-template #notFollowed>
-                  <mat-icon>favorite_border</mat-icon>
+                <div *ngIf="this.currentAuction.favorite; then favorite else notFavorite"></div>
+                <ng-template #favorite>
+                  <button mat-icon-button (click)="removeFromFavorites()">
+                    <mat-icon>favorite</mat-icon>
+                  </button>
+                </ng-template>
+                <ng-template #notFavorite>
+                  <button mat-icon-button (click)="addToFavorites()">
+                    <mat-icon>favorite_border</mat-icon>
+                  </button>
                 </ng-template>
               </button>
             </div>
