@@ -26,8 +26,8 @@ public class AuctionFacade {
                 userService.getCurrentUser());
     }
 
-    public List<Auction> getAuctions(Long ownerId) {
-        List<Auction> allAuctions = auctionService.getAuctions(ownerId).stream()
+    public List<Auction> getAuctions(Long ownerId, Boolean isActive) {
+        List<Auction> allAuctions = auctionService.getAuctions(ownerId, isActive).stream()
                 .map(imageService::getAuctionWithImageFiles)
                 .toList();
         return auctionService.getUpdatedAuctionsWithIsFavorite(allAuctions, userService.getCurrentUser());
@@ -40,5 +40,14 @@ public class AuctionFacade {
         auctionService.saveNewAuction(owner, auction, imageEntities);
     }
 
+    //TODO think about transactional here?
+    public void changeAuctionStatus(Long auctionId, boolean newIsActive, boolean isSold) {
+        Auction auction = auctionService.getAuctionById(auctionId);
+        auction.setIsActive(newIsActive);
+        auctionService.updateAuction(auction);
 
+        //TODO send notifications with kafka (isSold) to followers
+
+        //TODO remove auction from followers
+    }
 }

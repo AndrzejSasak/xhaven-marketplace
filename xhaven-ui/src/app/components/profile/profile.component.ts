@@ -7,6 +7,8 @@ import {User} from "../../models/user";
 import {map, mergeMap, switchMap} from "rxjs";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {ThumbnailAuction} from "../../models/thumbnailAuction";
+import {MatDialog} from "@angular/material/dialog";
+import {RemoveAuctionDialogComponent} from "../remove-auction-dialog/remove-auction-dialog.component";
 
 @Component({
   selector: 'app-profile',
@@ -19,12 +21,13 @@ export class ProfileComponent implements OnInit {
   userAuctionsLength: number;
   favoriteAuctions: ThumbnailAuction[] = [];
   favoriteAuctionsLength: number;
-  currentUser: User;
+  isSold: boolean | null = null;
 
   constructor(private router: Router,
               private auctionService: AuctionService,
               private userService: UserService,
-              private sanitizer: DomSanitizer) {}
+              private sanitizer: DomSanitizer,
+              public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.userService.getCurrentUser()
@@ -43,7 +46,8 @@ export class ProfileComponent implements OnInit {
             price: auction.price,
             thumbnail: imageURL,
             postedAt: auction.postedAt,
-            favorite: auction.favorite
+            favorite: auction.favorite,
+            active: auction.active
           }
 
           this.userAuctions = this.userAuctions.concat(thumbnailAuction);
@@ -67,7 +71,8 @@ export class ProfileComponent implements OnInit {
             price: auction.price,
             thumbnail: imageURL,
             postedAt: auction.postedAt,
-            favorite: auction.favorite
+            favorite: auction.favorite,
+            active: auction.active
           }
 
           this.favoriteAuctions = this.favoriteAuctions.concat(thumbnailAuction);
@@ -103,4 +108,16 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  openDialog(auctionId: string | undefined) {
+    const dialogRef = this.dialog.open(RemoveAuctionDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.event == 'sold') {
+        this.auctionService.takeDownAuction(auctionId || '', true).subscribe();
+      } else if(result.event == 'notSold') {
+        this.auctionService.takeDownAuction(auctionId || '', false).subscribe();
+      }
+    })
+
+  }
 }

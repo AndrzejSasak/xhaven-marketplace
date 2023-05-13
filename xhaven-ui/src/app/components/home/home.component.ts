@@ -36,7 +36,8 @@ export class HomeComponent implements OnInit {
           price: auction.price,
           thumbnail: imageURL,
           postedAt: auction.postedAt,
-          favorite: auction.favorite
+          favorite: auction.favorite,
+          active: auction.active
         }
 
         console.log(thumbnailAuction.favorite)

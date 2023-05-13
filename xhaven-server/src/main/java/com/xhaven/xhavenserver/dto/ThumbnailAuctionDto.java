@@ -21,5 +21,6 @@ public class ThumbnailAuctionDto {
     private ImageDto thumbnail;
     private LocalDateTime postedAt;
     private boolean isFavorite;
+    private boolean isActive;
 
 }

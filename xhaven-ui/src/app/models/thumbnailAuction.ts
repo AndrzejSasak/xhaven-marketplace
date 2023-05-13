@@ -8,4 +8,5 @@ export interface ThumbnailAuction {
   thumbnail?: SafeUrl;
   postedAt?: string;
   favorite: boolean;
+  active: boolean;
 }

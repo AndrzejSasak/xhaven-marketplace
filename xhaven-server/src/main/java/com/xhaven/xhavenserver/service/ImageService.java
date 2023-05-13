@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,4 +77,5 @@ public class ImageService {
     private String getUniqueName(MultipartFile image) {
         return UUID.randomUUID() + FILENAME_SEPARATOR + image.getOriginalFilename();
     }
+
 }

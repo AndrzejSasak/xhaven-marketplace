@@ -4,12 +4,14 @@ import com.xhaven.xhavenserver.model.entity.Auction;
 import com.xhaven.xhavenserver.model.entity.Image;
 import com.xhaven.xhavenserver.model.entity.User;
 import com.xhaven.xhavenserver.repository.AuctionRepository;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,17 +25,25 @@ public class AuctionService {
                 .orElseThrow(() -> new IllegalArgumentException("Auction not found"));
     }
 
-    public List<Auction> getAuctions(Long ownerId) {
-        if(ownerId == null) {
-            return auctionRepository.findAll();
-        }
+    public List<Auction> getAuctions(Long ownerId, Boolean isActive) {
+        Specification<Auction> spec = (root, cq, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if(ownerId != null) {
+                predicates.add(cb.equal(root.get("owner"), ownerId));
+            }
+            if(isActive != null) {
+                predicates.add(cb.equal(root.get("isActive"), isActive));
+            }
 
-        Specification<Auction> spec = (root, cq, cb) -> cb.equal(root.get("owner"), ownerId);
+            Predicate andPredicate = null;
+            for (Predicate predicate : predicates) {
+                andPredicate = cb.and(predicate);
+            }
+
+            return andPredicate;
+        };
+
         return auctionRepository.findAll(spec);
-    }
-
-    public List<Auction> getAuctionsByOwnerId(Long ownerId) {
-        return auctionRepository.findAllByOwnerId(ownerId);
     }
 
     @Transactional
@@ -59,5 +69,9 @@ public class AuctionService {
 
     private boolean isAuctionFavorite(Auction auction, User user) {
         return user.getFavoriteAuctions().contains(auction);
+    }
+
+    public void updateAuction(Auction auction) {
+        auctionRepository.save(auction);
     }
 }
