@@ -40,7 +40,7 @@ public class User {
     @OneToMany(mappedBy = "owner")
     private List<Auction> auctions;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Auction> favoriteAuctions;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

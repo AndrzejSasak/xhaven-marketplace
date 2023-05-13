@@ -15,11 +15,13 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class ImageService {
 
+    public static final String FILENAME_SEPARATOR = "&";
     private final ImageRepository imageRepository;
 
     private String pathValue = System.getProperty("user.dir") + File.separator +
@@ -31,25 +33,21 @@ public class ImageService {
             "images";
     private final Path uploads = Path.of(pathValue);
 
-    public List<Image> createImageEntites(MultipartFile[] images) {
-        List<Image> imageEntityList = new ArrayList<>();
-        Arrays.stream(images).forEach(image -> imageEntityList.add(Image.builder()
-                .imageName(image.getOriginalFilename())
-                .build()));
+    public List<Image> saveImagesToFilesystem(MultipartFile[] images) {
+        List<Image> imageEntities = new ArrayList<>();
 
-        return imageEntityList;
-    }
+        for(MultipartFile imageFile : images) {
+            String uniqueFilename = getUniqueName(imageFile);
+            saveImageToFilesystem(imageFile, uniqueFilename);
 
-    public void saveImagesToFilesystem(MultipartFile[] images) {
-        Arrays.stream(images).forEach(this::saveImage);
-    }
+            Image imageEntity = Image.builder()
+                    .imageName(uniqueFilename)
+                    .build();
 
-    private void saveImage(MultipartFile image) {
-        try {
-            Files.copy(image.getInputStream(), uploads.resolve(image.getOriginalFilename()));
-        } catch (IOException ioException) {
-            throw new RuntimeException("Could not store image: " + ioException.getMessage());
+            imageEntities.add(imageEntity);
         }
+
+        return imageEntities;
     }
 
     public Auction getAuctionWithImageFiles(Auction auction) {
@@ -61,11 +59,23 @@ public class ImageService {
         return auction;
     }
 
+    private void saveImageToFilesystem(MultipartFile image, String filename) {
+        try {
+            Files.copy(image.getInputStream(), uploads.resolve(filename));
+        } catch (IOException ioException) {
+            throw new RuntimeException("Could not store image: " + ioException.getMessage());
+        }
+    }
+
     private byte[] readBytes(File file) {
         try {
             return Files.readAllBytes(file.toPath());
         } catch (IOException ioException) {
             throw new RuntimeException("Unable to read bytes: " + ioException.getMessage());
         }
+    }
+
+    private String getUniqueName(MultipartFile image) {
+        return UUID.randomUUID() + FILENAME_SEPARATOR + image.getOriginalFilename();
     }
 }
