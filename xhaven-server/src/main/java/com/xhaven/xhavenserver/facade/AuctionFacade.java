@@ -35,8 +35,7 @@ public class AuctionFacade {
 
     //TODO think about transactional here or in services
     public void saveNewAuction(Auction auction, MultipartFile[] images) {
-        imageService.saveImagesToFilesystem(images);
-        List<Image> imageEntities = imageService.createImageEntites(images);
+        List<Image> imageEntities = imageService.saveImagesToFilesystem(images);
         User owner = userService.getCurrentUser();
         auctionService.saveNewAuction(owner, auction, imageEntities);
     }
