@@ -18,6 +18,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTreeModule} from '@angular/material/tree';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 
 import {AppComponent} from './app.component';
 import {LoginComponent} from './components/login/login.component';
@@ -35,6 +36,7 @@ import {AuctionComponent} from './components/auction/auction.component';
 import {LogoutComponent} from './components/logout/logout.component';
 import { ImageStepperComponent } from './components/image-stepper/image-stepper.component';
 import {CdkStepperModule} from "@angular/cdk/stepper";
+import { RemoveAuctionDialogComponent } from './components/remove-auction-dialog/remove-auction-dialog.component';
 
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -59,7 +61,8 @@ const appRoutes: Routes = [
     ImageUploadComponent,
     AuctionComponent,
     LogoutComponent,
-    ImageStepperComponent
+    ImageStepperComponent,
+    RemoveAuctionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -84,6 +87,7 @@ const appRoutes: Routes = [
     MatTreeModule,
     NgbModule,
     CdkStepperModule,
+    MatDialogModule
   ],
   providers: [
     {
@@ -94,6 +98,10 @@ const appRoutes: Routes = [
     {
       provide: JWT_OPTIONS,
       useValue: JWT_OPTIONS,
+    },
+    {
+      provide: MatDialogRef,
+      useValue: {}
     },
     JwtHelperService,
   ],

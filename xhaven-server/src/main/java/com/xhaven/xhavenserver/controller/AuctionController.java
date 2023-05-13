@@ -1,6 +1,7 @@
 package com.xhaven.xhavenserver.controller;
 
 import com.xhaven.xhavenserver.dto.AuctionDto;
+import com.xhaven.xhavenserver.dto.ChangedAuctionStatusDto;
 import com.xhaven.xhavenserver.dto.NewAuctionDto;
 import com.xhaven.xhavenserver.dto.ThumbnailAuctionDto;
 import com.xhaven.xhavenserver.facade.AuctionFacade;
@@ -34,9 +35,20 @@ public class AuctionController {
         auctionFacade.saveNewAuction(modelMapper.map(newAuctionDto, Auction.class), files);
     }
 
+    @PutMapping("/{auctionId}/status")
+    public void changeAuctionStatus(@PathVariable Long auctionId, @RequestBody ChangedAuctionStatusDto changedAuctionStatusDto) {
+        auctionFacade.changeAuctionStatus(auctionId, changedAuctionStatusDto.isActive(), changedAuctionStatusDto.isActive());
+    }
+
+//    @PutMapping("/{auctionId}")
+//    public void updateAuction(@PathVariable Long auctionId, @RequestBody UpdatedAuctionDto updatedAuctionDto) {
+//        auctionFacade.updateAuction(auctionId, updatedAuctionDto.map);
+//    }
+
     @GetMapping
-    public List<ThumbnailAuctionDto> getAuctions(@RequestParam(required = false) Long ownerId) {
-        return auctionFacade.getAuctions(ownerId).stream()
+    public List<ThumbnailAuctionDto> getAuctions(@RequestParam(required = false) Long ownerId,
+                                                 @RequestParam(required = false) Boolean isActive) {
+        return auctionFacade.getAuctions(ownerId, isActive).stream()
                 .map(auctionMapper::mapToThumbnail)
                 .toList();
     }

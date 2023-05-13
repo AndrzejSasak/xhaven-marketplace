@@ -20,6 +20,7 @@ public class AuctionMapper {
                 .thumbnail(modelMapper.map(auction.getImages().get(0), ImageDto.class))
                 .postedAt(auction.getPostedAt())
                 .isFavorite(auction.getIsFavorite())
+                .isActive(auction.getIsActive())
                 .build();
     }
 

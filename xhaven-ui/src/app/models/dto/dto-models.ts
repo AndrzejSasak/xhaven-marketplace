@@ -45,6 +45,7 @@ export interface ThumbnailAuctionDto {
   thumbnail?: ImageDto;
   postedAt: string;
   favorite: boolean;
+  active: boolean;
 }
 
 export interface ImageDto {

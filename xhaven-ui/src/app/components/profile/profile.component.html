@@ -15,7 +15,7 @@
             <mat-tab label="Your auctions">
               <mat-card>
                 <mat-card-content>
-                  <h2>Search results</h2>
+<!--                  <h2>Search results</h2>-->
                   <mat-paginator
                     [length]="userAuctionsLength"
                     [pageSize]="10"
@@ -35,17 +35,15 @@
                             <p>{{ auction.description }}</p> <!-- doesnt work -->
                             <p>{{ auction.postedAt }}</p>
                           </div>
-                          <div class="col-lg-2">
-                            <div *ngIf="auction.favorite; then favorite else notFavorite"></div>
-                            <ng-template #favorite>
-                              <button mat-icon-button (click)="removeFromFavorites(auction)">
-                                <mat-icon>favorite</mat-icon>
+                          <div class="col-lg-2 align-self-end">
+                            <div *ngIf="auction.active; then active else notActive"></div>
+                            <ng-template #active>
+                              <button mat-raised-button color="primary" (click)="openDialog(auction.id)">
+                                Take down auction
                               </button>
                             </ng-template>
-                            <ng-template #notFavorite>
-                              <button mat-icon-button (click)="addToFavorites(auction)">
-                                <mat-icon>favorite_border</mat-icon>
-                              </button>
+                            <ng-template #notActive>
+                              <mat-label>Auction inactive</mat-label>
                             </ng-template>
                           </div>
                         </div>
@@ -58,7 +56,7 @@
             <mat-tab label="Followed auctions">
               <mat-card>
                 <mat-card-content>
-                  <h2>Search results</h2>
+<!--                  <h2>Search results</h2>-->
                   <mat-paginator
                     [length]="favoriteAuctionsLength"
                     [pageSize]="10"

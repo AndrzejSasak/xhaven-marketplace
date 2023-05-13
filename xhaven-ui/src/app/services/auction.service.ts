@@ -11,13 +11,12 @@ import {UserService} from "./user.service";
 export class AuctionService {
 
   API_URL: string = 'http://localhost:8080/api/v1/auctions';
-  currentUser: User;
 
-  constructor(private httpClient: HttpClient,
-              private userService: UserService) { }
+  constructor(private httpClient: HttpClient) { }
 
   getAuctions(): Observable<ThumbnailAuctionDto[]> {
-    return this.httpClient.get<ThumbnailAuctionDto[]>(this.API_URL);
+    const httpParams: HttpParams = new HttpParams().set('isActive', true);
+    return this.httpClient.get<ThumbnailAuctionDto[]>(this.API_URL, {params: httpParams});
   }
 
   getAuctionsByOwnerId(id: string): Observable<ThumbnailAuctionDto[]> {
@@ -31,6 +30,10 @@ export class AuctionService {
 
   postNewAuction(formData: FormData): Observable<any> {
     return this.httpClient.post(this.API_URL, formData);
+  }
+
+  takeDownAuction(auctionId: string, isSold: boolean): Observable<any> {
+    return this.httpClient.put(`${this.API_URL}/${auctionId}/status`, { isActive: false, isSold: isSold});
   }
 
 }
