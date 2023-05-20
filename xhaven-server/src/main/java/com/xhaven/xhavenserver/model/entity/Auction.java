@@ -39,7 +39,7 @@ public class Auction {
     @Column(name = "PRICE")
     private BigDecimal price;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_auction")
     private List<Image> images;
 

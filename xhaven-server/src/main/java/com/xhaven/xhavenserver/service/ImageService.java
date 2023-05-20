@@ -21,7 +21,6 @@ import java.util.UUID;
 public class ImageService {
 
     public static final String FILENAME_SEPARATOR = "&";
-    private final ImageRepository imageRepository;
 
     private String pathValue = System.getProperty("user.dir") + File.separator +
             "xhaven-server" + File.separator +

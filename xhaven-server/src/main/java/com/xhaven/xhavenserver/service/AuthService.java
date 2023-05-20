@@ -6,6 +6,7 @@ import com.xhaven.xhavenserver.model.entity.Token;
 import com.xhaven.xhavenserver.model.TokenType;
 import com.xhaven.xhavenserver.config.security.CustomUserDetails;
 import com.xhaven.xhavenserver.config.security.JwtService;
+import com.xhaven.xhavenserver.repository.RoleRepository;
 import com.xhaven.xhavenserver.repository.TokenRepository;
 import com.xhaven.xhavenserver.dto.auth.RegisterRequestDto;
 import com.xhaven.xhavenserver.model.RoleEnum;
@@ -31,6 +32,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -42,7 +44,9 @@ public class AuthService {
                 .surname(registerRequestDto.getSurname())
                 .email(registerRequestDto.getEmail())
                 .password(passwordEncoder.encode(registerRequestDto.getPassword()))
-                .roles(Set.of(new Role(RoleEnum.ROLE_USER)))
+                .roles(Set.of(roleRepository.findByName(RoleEnum.ROLE_USER).orElseThrow(
+                        () -> new IllegalArgumentException("Invalid role")
+                )))
                 .build();
 
         User savedUser = userRepository.save(newUser);

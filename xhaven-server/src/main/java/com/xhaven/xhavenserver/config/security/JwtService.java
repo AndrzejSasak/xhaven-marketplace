@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-//@PropertySource("classpath:application.properties")
 public class JwtService {
 
 //    @Value("${secret.signing.key}")

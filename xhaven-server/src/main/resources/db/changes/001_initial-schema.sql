@@ -3,32 +3,20 @@
 create sequence _user_seq
     increment by 50;
 
-alter sequence _user_seq owner to xhaven;
-
 create sequence auction_seq
     increment by 50;
-
-alter sequence auction_seq owner to xhaven;
 
 create sequence category_seq
     increment by 50;
 
-alter sequence category_seq owner to xhaven;
-
 create sequence image_seq
     increment by 50;
-
-alter sequence image_seq owner to xhaven;
 
 create sequence role_seq
     increment by 50;
 
-alter sequence role_seq owner to xhaven;
-
 create sequence token_seq
     increment by 50;
-
-alter sequence token_seq owner to xhaven;
 
 create table _user
 (
@@ -41,9 +29,6 @@ create table _user
     surname      varchar(255)
 );
 
-alter table _user
-    owner to xhaven;
-
 create table category
 (
     category_id   bigint not null
@@ -53,9 +38,6 @@ create table category
         constraint fk2y94svpmqttx80mshyny85wqr
             references category
 );
-
-alter table category
-    owner to xhaven;
 
 create table auction
 (
@@ -75,10 +57,6 @@ create table auction
         constraint fkmid2wyc7c1nnbyt98jx2drjlj
             references _user
 );
-
-alter table auction
-    owner to xhaven;
-
 create table _user_favorite_auctions
 (
     user_id_user                 bigint not null
@@ -88,9 +66,6 @@ create table _user_favorite_auctions
         constraint fkm1ynrutv54dh4ydk5suvdrb7m
             references auction
 );
-
-alter table _user_favorite_auctions
-    owner to xhaven;
 
 create table image
 (
@@ -102,18 +77,12 @@ create table image
             references auction
 );
 
-alter table image
-    owner to xhaven;
-
 create table role
 (
     id   bigint not null
         primary key,
     name varchar(255)
 );
-
-alter table role
-    owner to xhaven;
 
 create table token
 (
@@ -130,9 +99,6 @@ create table token
             references _user
 );
 
-alter table token
-    owner to xhaven;
-
 create table user_role
 (
     id_user bigint not null
@@ -143,7 +109,4 @@ create table user_role
             references role,
     primary key (id_user, id_role)
 );
-
-alter table user_role
-    owner to xhaven;
 

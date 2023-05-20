@@ -45,4 +45,8 @@ public class UserService {
     public List<Auction> getFavoriteAuctions(User user) {
         return user.getFavoriteAuctions();
     }
+
+    public List<User> getFollowersOfAuction(Auction auction) {
+        return userRepository.findFollowersOfAuction(auction);
+    }
 }
