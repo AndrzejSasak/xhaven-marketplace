@@ -5,6 +5,7 @@ import com.xhaven.xhavenserver.model.entity.User;
 import com.xhaven.xhavenserver.service.AuctionService;
 import com.xhaven.xhavenserver.service.ImageService;
 import com.xhaven.xhavenserver.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
