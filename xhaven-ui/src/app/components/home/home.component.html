@@ -42,35 +42,8 @@
             </mat-expansion-panel-header>
             <div class="container">
               <div class="row gy-2">
-                <div class="col-lg-3 d-flex justify-content-center">
-                  <button mat-raised-button color="accent" class="category-btn">Automotive</button>
-                </div>
-                <div class="col-lg-3 d-flex justify-content-center">
-                  <button mat-raised-button color="accent" class="category-btn">Real estate</button>
-                </div>
-                <div class="col-lg-3 d-flex justify-content-center">
-                  <button mat-raised-button color="accent" class="category-btn">Electronics</button>
-                </div>
-                <div class="col-lg-3 d-flex justify-content-center">
-                  <button mat-raised-button color="accent" class="category-btn">Fashion</button>
-                </div>
-                <div class="col-lg-3 d-flex justify-content-center">
-                  <button mat-raised-button color="accent" class="category-btn">Animals</button>
-                </div>
-                <div class="col-lg-3 d-flex justify-content-center">
-                  <button mat-raised-button color="accent" class="category-btn">For children</button>
-                </div>
-                <div class="col-lg-3 d-flex justify-content-center">
-                  <button mat-raised-button color="accent" class="category-btn">Sports and hobbies</button>
-                </div>
-                <div class="col-lg-3 d-flex justify-content-center">
-                  <button mat-raised-button color="accent" class="category-btn">Music</button>
-                </div>
-                <div class="col-lg-3 d-flex justify-content-center">
-                  <button mat-raised-button color="accent" class="category-btn">Health</button>
-                </div>
-                <div class="col-lg-3 d-flex justify-content-center">
-                  <button mat-raised-button color="accent" class="category-btn">Bicycles</button>
+                <div *ngFor="let category of categories" class="col-lg-3">
+                    <button [routerLink]="'/categories/' + category.id" mat-raised-button color="accent" class="category-btn">{{ category.categoryName }}</button>
                 </div>
               </div>
             </div>

@@ -49,7 +49,9 @@
                     {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                   </mat-icon>
                 </button>
-                {{node.categoryName}}
+                <button mat-stroked-button (click)="setCategory(node)">
+                  {{node.categoryName}}
+                </button>
               </div>
               <div [class.category-tree-invisible]="!treeControl.isExpanded(node)"
                    role="group">

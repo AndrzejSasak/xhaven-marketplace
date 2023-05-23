@@ -37,6 +37,7 @@ import {LogoutComponent} from './components/logout/logout.component';
 import { ImageStepperComponent } from './components/image-stepper/image-stepper.component';
 import {CdkStepperModule} from "@angular/cdk/stepper";
 import { RemoveAuctionDialogComponent } from './components/remove-auction-dialog/remove-auction-dialog.component';
+import { CategoryComponent } from './components/category/category.component';
 
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -45,6 +46,7 @@ const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
   {path: 'new-auction', component: NewAuctionComponent, canActivate: [AuthGuardService]},
+  {path: 'categories/:categoryId', component: CategoryComponent},
   {path: 'auctions/:auctionId', component: AuctionComponent},
   {path: '**', redirectTo: 'home'}
 ]
@@ -62,7 +64,8 @@ const appRoutes: Routes = [
     AuctionComponent,
     LogoutComponent,
     ImageStepperComponent,
-    RemoveAuctionDialogComponent
+    RemoveAuctionDialogComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {ThumbnailAuctionDto} from 'src/app/models/dto/dto-models';
+import {CategoryDto, ThumbnailAuctionDto} from 'src/app/models/dto/dto-models';
 import {AuctionService} from 'src/app/services/auction.service';
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {ThumbnailAuction} from "../../models/thumbnailAuction";
 import {mergeMap} from "rxjs";
 import {User} from "../../models/user";
 import {UserService} from "../../services/user.service";
+import {CategoryService} from "../../services/category.service";
 
 @Component({
   selector: 'app-home',
@@ -17,11 +18,13 @@ export class HomeComponent implements OnInit {
 
   auctions: ThumbnailAuction[] = [];
   auctionsLength: number;
+  categories: CategoryDto[];
 
   constructor(private router: Router,
               private auctionService: AuctionService,
               private sanitizer: DomSanitizer,
-              private userService: UserService) {}
+              private userService: UserService,
+              private categoryService: CategoryService) {}
 
   ngOnInit(): void {
     this.auctionService.getAuctions().subscribe((auctions: ThumbnailAuctionDto[]) => {
@@ -46,6 +49,11 @@ export class HomeComponent implements OnInit {
 
       this.auctionsLength = this.auctions.length;
     });
+
+
+    this.categoryService.getCategories().subscribe((categories: CategoryDto[]): void => {
+      this.categories = categories;
+    })
   }
 
   newAuctionRedirect() {

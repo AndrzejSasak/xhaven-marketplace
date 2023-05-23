@@ -20,8 +20,7 @@ export class AuctionComponent implements OnInit {
   constructor(private auctionService: AuctionService,
               private userService: UserService,
               private activatedRoute: ActivatedRoute,
-              private sanitizer: DomSanitizer,
-              private changeDetectorRef: ChangeDetectorRef) {
+              private sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {

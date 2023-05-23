@@ -1,6 +1,4 @@
-import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {CategoryService} from "../../services/category.service";
@@ -28,9 +26,7 @@ export class NewAuctionComponent implements OnInit {
   imageComponentToImageMap: Record<number, File> = {};
   images: File[];
 
-  constructor(private httpClient: HttpClient,
-              private fb: FormBuilder,
-              private categoryService: CategoryService,
+  constructor(private categoryService: CategoryService,
               private auctionService: AuctionService) {
   }
   hasChild = (_: number, node: CategoryDto) => !!node.subcategories && node.subcategories.length > 0;
