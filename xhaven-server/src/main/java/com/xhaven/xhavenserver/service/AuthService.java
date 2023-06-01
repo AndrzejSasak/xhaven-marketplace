@@ -2,6 +2,7 @@ package com.xhaven.xhavenserver.service;
 
 import com.xhaven.xhavenserver.dto.auth.AuthenticationResponseDto;
 import com.xhaven.xhavenserver.dto.auth.LoginRequestDto;
+import com.xhaven.xhavenserver.exception.UserAlreadyExistsException;
 import com.xhaven.xhavenserver.model.entity.Token;
 import com.xhaven.xhavenserver.model.TokenType;
 import com.xhaven.xhavenserver.config.security.CustomUserDetails;
@@ -39,6 +40,10 @@ public class AuthService {
 
     @Transactional
     public AuthenticationResponseDto register(RegisterRequestDto registerRequestDto) {
+        if(userAlreadyExists(registerRequestDto.getEmail())) {
+            throw new UserAlreadyExistsException("User already exists");
+        }
+
         User newUser = User.builder()
                 .name(registerRequestDto.getName())
                 .surname(registerRequestDto.getSurname())
@@ -82,6 +87,10 @@ public class AuthService {
                 .getPrincipal();
         revokeAllUserTokens(principal.getCurrentUser());
         SecurityContextHolder.clearContext();
+    }
+
+    private boolean userAlreadyExists(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 
     private void saveUserToken(User user, String jwtToken) {

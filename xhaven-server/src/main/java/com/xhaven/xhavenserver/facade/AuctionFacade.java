@@ -40,7 +40,6 @@ public class AuctionFacade {
         return auctionService.getUpdatedAuctionsWithIsFavorite(allAuctions, userService.getCurrentUser());
     }
 
-    //TODO think about transactional here or in services
     public void saveNewAuction(Auction auction, MultipartFile[] images) {
         List<Image> imageEntities = imageService.saveImagesToFilesystem(images);
         User owner = userService.getCurrentUser();

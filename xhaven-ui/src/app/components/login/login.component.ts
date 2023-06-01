@@ -1,49 +1,62 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthService} from 'src/app/services/auth.service';
 
-import { LoginDto, TokenDto } from '../../models/dto/dto-models';
+import {LoginDto} from '../../models/dto/dto-models';
 import {UserService} from "../../services/user.service";
-import {User} from "../../models/user";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
+
+  loginForm: FormGroup;
+  showPassword: boolean = false;
+  errorMessage: string;
 
   public email: string;
   public password: string;
 
   constructor(private authService: AuthService,
               private userService: UserService,
-              private router: Router) { }
+              private router: Router,
+              private formBuilder: FormBuilder) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required]]
+    });
+  }
 
-
-  login() {
-    if(this.authService.isAuthenticated()) {
-      this.router.navigate(['home']);
+  onSubmit() {
+    if(this.loginForm.invalid) {
+      return;
     }
 
     const loginDto: LoginDto = {
-      'email': this.email,
-      'password': this.password
-    };
+      'email': this.loginForm.get('email')?.value,
+      'password': this.loginForm.get('password')?.value
+    }
 
     this.authService.login(loginDto).subscribe(
       (tokenDto: any) => {
         localStorage.setItem(this.authService.JWT_LOCAL_STORAGE_KEY, tokenDto.token);
         this.router.navigate(['home']);
+      },
+      (error) => {
+        this.errorMessage = error;
       }
     )
   }
 
-  registerRedirect() {
-    this.router.navigate(['register']);
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
-  ngOnInit(): void {
+  registerRedirect() {
+    this.router.navigate(['register']);
   }
 
 }

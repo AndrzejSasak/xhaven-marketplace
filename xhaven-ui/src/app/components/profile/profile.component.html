@@ -15,7 +15,6 @@
             <mat-tab label="Your auctions">
               <mat-card>
                 <mat-card-content>
-<!--                  <h2>Search results</h2>-->
                   <mat-paginator
                     [length]="userAuctionsLength"
                     [pageSize]="10"
@@ -32,7 +31,7 @@
                           <div class="col-lg-6" (click)="auctionRedirect(auction.id)">
                             <h1>{{ auction.title }}</h1>
                             <h2>${{ auction.price }}</h2>
-                            <p>{{ auction.description }}</p> <!-- doesnt work -->
+                            <p>{{ auction.description }}</p>
                             <p>{{ auction.postedAt }}</p>
                           </div>
                           <div class="col-lg-2 align-self-end">

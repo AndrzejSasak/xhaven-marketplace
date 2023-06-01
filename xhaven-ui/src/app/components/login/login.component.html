@@ -7,24 +7,32 @@
       <div class="col-6 align-self-center">
         <mat-card>
           <mat-card-content>
-            <form>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
               <mat-card-header>Log In</mat-card-header>
-              <mat-form-field>
-                <input matInput placeholder="Email" [(ngModel)]="email" name="email" required>
-                <mat-error>
-                  Please provide a valid email address
+              <mat-form-field appearance="outline">
+                <input matInput placeholder="Email" name="email" formControlName="email">
+                <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
+                  Please enter an email
                 </mat-error>
               </mat-form-field>
-              <mat-form-field>
-                <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
-                <mat-error>
-                  Please provide a valid password
+              <mat-form-field appearance="outline">
+                <input matInput [type]="showPassword ? 'text' : 'password'" placeholder="Password" formControlName="password" name="password">
+                <mat-icon matSuffix (click)="togglePasswordVisibility()">
+                  {{showPassword?'visibility_off':'visibility'}}
+                </mat-icon>
+                <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+                  Please provide a password
                 </mat-error>
               </mat-form-field>
+              <div *ngIf="errorMessage">
+                <mat-label>
+                  {{ errorMessage }}
+                </mat-label>
+              </div>
               <div class="container">
                 <div class="row">
                   <div class="col">
-                    <button mat-raised-button color="primary" (click)="login()">Login</button>
+                    <button mat-raised-button color="primary" (click)="onSubmit()">Login</button>
                   </div>
                   <div class="col">
                     <button mat-raised-button color="primary" (click)="registerRedirect()">Register</button>

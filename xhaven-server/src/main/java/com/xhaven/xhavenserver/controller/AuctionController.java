@@ -40,11 +40,6 @@ public class AuctionController {
         auctionFacade.changeAuctionStatus(auctionId, changedAuctionStatusDto.isActive(), changedAuctionStatusDto.isActive());
     }
 
-//    @PutMapping("/{auctionId}")
-//    public void updateAuction(@PathVariable Long auctionId, @RequestBody UpdatedAuctionDto updatedAuctionDto) {
-//        auctionFacade.updateAuction(auctionId, updatedAuctionDto.map);
-//    }
-
     @GetMapping
     public List<ThumbnailAuctionDto> getAuctions(@RequestParam(required = false) Long ownerId,
                                                  @RequestParam(required = false) Boolean isActive) {
