@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -32,7 +32,15 @@ export class AuthService {
   }
 
   login(loginDto: LoginDto): Observable<TokenDto> {
-    return this.http.post<TokenDto>(`${API_URL}/login`, loginDto, {headers: {skipIntercept: 'true'}});
+    return this.http.post<TokenDto>(`${API_URL}/login`, loginDto, {headers: {skipIntercept: 'true'}})
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if(error.status === 403) {
+            return throwError(() => 'Unable to log in with provided credentials')
+          }
+          return throwError(() => 'An error occurred while trying to log in')
+        })
+      );
   }
 
   logout(): Observable<any> {
@@ -40,7 +48,15 @@ export class AuthService {
   }
 
   register(registerDto: RegisterDto): Observable<TokenDto> {
-    return this.http.post<TokenDto>(`${API_URL}/register`, registerDto, {headers: {skipIntercept: 'true'}});
+    return this.http.post<TokenDto>(`${API_URL}/register`, registerDto, {headers: {skipIntercept: 'true'}})
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if(error.status === 409) {
+            return throwError(() => 'User with entered email already exists');
+          }
+          return throwError(() => 'An error occurred while registering the user')
+        })
+      );
   }
 
 }

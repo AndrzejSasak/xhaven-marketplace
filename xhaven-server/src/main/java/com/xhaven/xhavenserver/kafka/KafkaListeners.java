@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KafkaListeners {
 
-    private final AuctionService auctionService;
     private final MailService mailService;
 
     @KafkaListener(

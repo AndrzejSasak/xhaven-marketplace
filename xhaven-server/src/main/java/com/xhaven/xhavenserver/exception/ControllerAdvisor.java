@@ -11,8 +11,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(AuctionNotFoundException.class)
-    public ResponseEntity<Object> handleAuctionNotFoundException(AuctionNotFoundException ex, WebRequest webRequest) {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Object> handleAuctionNotFoundException(AuctionNotFoundException ex) {
+        //TODO log exception
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Object> handleAuctionNotFoundException(UserAlreadyExistsException ex) {
+        //TODO log exception
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
 }

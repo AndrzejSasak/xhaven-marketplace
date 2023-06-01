@@ -19,7 +19,6 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-//    @Value("${secret.signing.key}")
     private static String SECRET_SIGNING_KEY = "4A614E645267556B58703272357538782F413F4428472B4B6250655368566D59";
 
     public String extractUsername(String token) {
