@@ -6,6 +6,7 @@ import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {CategoryService} from "../../services/category.service";
 import {CategoryDto, NewAuctionDto} from "../../models/dto/dto-models";
 import {AuctionService} from "../../services/auction.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-auction',
@@ -28,7 +29,8 @@ export class NewAuctionComponent implements OnInit {
   imageComponentToImageMap: Record<number, File> = {};
   images: File[];
 
-  constructor(private httpClient: HttpClient,
+  constructor(private router: Router,
+              private httpClient: HttpClient,
               private fb: FormBuilder,
               private categoryService: CategoryService,
               private auctionService: AuctionService) {
@@ -70,7 +72,11 @@ export class NewAuctionComponent implements OnInit {
       type: 'application/json'
     }))
 
-    this.auctionService.postNewAuction(formDataWhole).subscribe();
+    this.auctionService.postNewAuction(formDataWhole).subscribe(
+      () => {
+        this.router.navigate(['home']);
+      }
+    );
   }
 
 }
