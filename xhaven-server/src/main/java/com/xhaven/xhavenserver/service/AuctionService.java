@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,10 +20,32 @@ import java.util.List;
 public class AuctionService {
 
     private final AuctionRepository auctionRepository;
+    private final ImageService imageService;
+    private final UserService userService;
+    private final NotificationService notificationService;
 
     public Auction getAuctionById(Long auctionId) {
         return auctionRepository.findById(auctionId)
                 .orElseThrow(() -> new IllegalArgumentException("Auction not found"));
+    }
+
+    public Auction getCompleteAuction(Long auctionId) {
+        Auction auction = getAuctionWithImagesById(auctionId);
+        auction = updateAuctionWithIsFavorite(auction, userService.getCurrentUser());
+        return auction;
+    }
+
+    private Auction getAuctionWithImagesById(Long auctionId) {
+        return imageService.getAuctionWithImageFiles(getAuctionById(auctionId));
+    }
+
+    public List<Auction> getAuctionsWithImagesAndFavoriteFlag(Long currentUserId, Long ownerId, Boolean isActive) {
+        List<Auction> allAuctions = getAuctions(ownerId, isActive).stream()
+                .map(imageService::getAuctionWithImageFiles)
+                .toList();
+
+        User currentUser = userService.getUserById(currentUserId);
+        return getUpdatedAuctionsWithFavoriteFlag(allAuctions, currentUser);
     }
 
     public List<Auction> getAuctions(Long ownerId, Boolean isActive) {
@@ -47,15 +70,16 @@ public class AuctionService {
     }
 
     @Transactional
-    public void saveNewAuction(User user, Auction auction, List<Image> images) { //TODO change to retrieving owner by id, not from security context?
+    public void saveNewAuction(Auction auction, MultipartFile[] images) {
+        List<Image> imageEntities = imageService.saveImagesToFilesystem(images);
         auction.setPostedAt(LocalDateTime.now());
         auction.setIsActive(true);
-        auction.setImages(images);
-        auction.setOwner(user);
+        auction.setImages(imageEntities);
+        auction.setOwner(userService.getCurrentUser());
         auctionRepository.save(auction);
     }
 
-    public List<Auction> getUpdatedAuctionsWithIsFavorite(List<Auction> auctions, User currentUser) {
+    public List<Auction> getUpdatedAuctionsWithFavoriteFlag(List<Auction> auctions, User currentUser) {
         return auctions.stream()
                 .map(auction -> updateAuctionWithIsFavorite(auction, currentUser))
                 .toList();
@@ -63,7 +87,6 @@ public class AuctionService {
 
     public Auction updateAuctionWithIsFavorite(Auction auction, User user) {
         auction.setIsFavorite(isAuctionFavorite(auction, user));
-
         return auction;
     }
 
@@ -71,7 +94,40 @@ public class AuctionService {
         return user.getFavoriteAuctions().contains(auction);
     }
 
-    public void updateAuction(Auction auction) {
+    @Transactional
+    public void changeAuctionStatus(Long auctionId, boolean newIsActive, boolean wasSold) {
+        Auction auction = getAuctionById(auctionId);
+        auction.setIsActive(newIsActive);
         auctionRepository.save(auction);
+
+        if(isAuctionBeingTakenDown(newIsActive)) {
+            List<User> followers = userService.getFollowersOfAuction(auction);
+            notificationService.sendAuctionTakenDownNotifications(auction, followers);
+            followers.forEach(user -> user.removeFavoriteAuction(auction));
+        }
     }
+
+    private boolean isAuctionBeingTakenDown(boolean newIsActive) {
+        return !newIsActive;
+    }
+
+    public List<Auction> getFavoriteAuctionsOfUser(Long currentUserId) {
+        User currentUser = userService.getUserById(currentUserId);
+        return currentUser.getFavoriteAuctions(); //TODO wrap in images and isFavorite
+    }
+
+    @Transactional
+    public void addAuctionToFavorites(Long currentUserId, Long auctionId) {
+        User currentUser = userService.getUserById(currentUserId);
+        currentUser.addFavoriteAuction(getAuctionById(auctionId));
+//        userService.saveUser(currentUser); //TODO is it needed?
+    }
+
+    public void removeAuctionFromFavorites(Long currentUserId, Long auctionId) {
+        User currentUser = userService.getUserById(currentUserId);
+        currentUser.removeFavoriteAuction(getAuctionById(auctionId));
+//        userService.saveUser(currentUser); //TODO is it needed?
+    }
+
+
 }

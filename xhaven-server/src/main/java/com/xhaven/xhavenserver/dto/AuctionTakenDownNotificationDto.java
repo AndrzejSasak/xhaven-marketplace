@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 public class AuctionTakenDownNotificationDto {
 
-    private AuctionDto auctionDto;
+    private CompleteAuctionDto completeAuctionDto;
     private List<String> recipientsEmails;
     private String content;
 

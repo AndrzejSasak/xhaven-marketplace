@@ -1,6 +1,5 @@
 package com.xhaven.xhavenserver.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,12 +39,11 @@ public class Auction {
     private BigDecimal price;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_auction")
+    @JoinColumn(name = "ID_AUCTION")
     private List<Image> images;
 
     @ManyToOne
     @JoinColumn(name = "ID_USER")
-    @JsonIgnore
     private User owner;
 
     @Column(name = "POSTED_AT")

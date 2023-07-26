@@ -1,9 +1,10 @@
 package com.xhaven.xhavenserver.controller;
 
-import com.xhaven.xhavenserver.facade.UserFacade;
 import com.xhaven.xhavenserver.dto.ThumbnailAuctionDto;
 import com.xhaven.xhavenserver.dto.UserDto;
 import com.xhaven.xhavenserver.mapper.AuctionMapper;
+import com.xhaven.xhavenserver.service.AuctionService;
+import com.xhaven.xhavenserver.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
@@ -17,29 +18,30 @@ import java.util.List;
 public class UserController {
 
     private final ModelMapper modelMapper;
-    private final UserFacade userFacade;
+    private final AuctionService auctionService;
+    private final UserService userService;
     private final AuctionMapper auctionMapper;
 
     @GetMapping("/current")
     public UserDto getCurrentlyLoggedInUser() {
-        return modelMapper.map(userFacade.getCurrentUser(), UserDto.class);
+        return modelMapper.map(userService.getCurrentUser(), UserDto.class);
     }
 
     @GetMapping("/{userId}/auctions/favorites")
     public List<ThumbnailAuctionDto> getFavoriteAuctionsOfUser(@PathVariable Long userId) {
-        return userFacade.getFavoriteAuctionsOfUser(userId).stream()
+        return auctionService.getFavoriteAuctionsOfUser(userId).stream()
                 .map(auctionMapper::mapToThumbnail)
                 .toList();
     }
 
     @PostMapping("/{userId}/auctions/favorites/{auctionId}")
     public void addAuctionToFavorites(@PathVariable Long userId, @PathVariable Long auctionId) {
-        userFacade.addAuctionToFavorites(userId, auctionId);
+        auctionService.addAuctionToFavorites(userId, auctionId);
     }
 
     @DeleteMapping("/{userId}/auctions/favorites/{auctionId}")
     public void removeAuctionFromFavorites(@PathVariable Long userId, @PathVariable Long auctionId) {
-        userFacade.removeAuctionFromFavorites(userId, auctionId);
+        auctionService.removeAuctionFromFavorites(userId, auctionId);
     }
 
 }

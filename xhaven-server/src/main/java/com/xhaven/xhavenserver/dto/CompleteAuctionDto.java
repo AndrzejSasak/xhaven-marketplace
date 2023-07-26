@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuctionDto {
+public class CompleteAuctionDto {
 
     private Long id;
     private String title;
