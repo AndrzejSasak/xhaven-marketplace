@@ -1,8 +1,7 @@
 package com.xhaven.xhavenserver.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,6 +12,9 @@ import java.util.Objects;
 @Table(name = "AUCTION")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Auction {
 
     @Id

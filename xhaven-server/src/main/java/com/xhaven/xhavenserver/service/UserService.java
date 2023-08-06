@@ -30,27 +30,6 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("User with ID " + userId + " not found"));
     }
 
-    public void saveUser(User user) {
-        userRepository.save(user);
-    }
-
-    @Transactional
-    public void addAuctionToFavorites(Long userId, Auction auction) {
-        User user = getUserById(userId);
-        user.addFavoriteAuction(auction);
-        userRepository.save(user);
-    }
-
-    @Transactional
-    public void removeAuctionFromFavorites(User user, Auction auction) {
-        user.removeFavoriteAuction(auction);
-        userRepository.save(user);
-    }
-
-    public List<Auction> getFavoriteAuctionsOfUser(Long userId) {
-        return getUserById(userId).getFavoriteAuctions();
-    }
-
     public List<User> getFollowersOfAuction(Auction auction) {
         return userRepository.findFollowersOfAuction(auction);
     }

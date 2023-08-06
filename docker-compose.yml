@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  angular-ui:
+    build:
+      context: ./xhaven-ui
+    ports:
+      - "4200:4200"
+    depends_on:
+      - springboot-server
+  springboot-server:
+    build:
+      context: ./xhaven-server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db
+      - kafka
+    env_file:
+      - .env
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+  postgres-db:
+    image: postgres:15.3-alpine
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    env_file:
+      - .env
+  kafka:
+    image: wurstmeister/kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    env_file:
+      - .env

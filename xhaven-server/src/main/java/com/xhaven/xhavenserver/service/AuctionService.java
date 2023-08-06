@@ -1,5 +1,6 @@
 package com.xhaven.xhavenserver.service;
 
+import com.xhaven.xhavenserver.exception.AuctionAlreadyFavoriteException;
 import com.xhaven.xhavenserver.model.entity.Auction;
 import com.xhaven.xhavenserver.model.entity.Image;
 import com.xhaven.xhavenserver.model.entity.User;
@@ -29,9 +30,10 @@ public class AuctionService {
                 .orElseThrow(() -> new IllegalArgumentException("Auction not found"));
     }
 
-    public Auction getCompleteAuction(Long auctionId) {
+    public Auction getCompleteAuction(Long currentUserId, Long auctionId) {
         Auction auction = getAuctionWithImagesById(auctionId);
-        auction = updateAuctionWithIsFavorite(auction, userService.getCurrentUser());
+        User currentUser = userService.getUserById(currentUserId);
+        auction = updateAuctionWithIsFavorite(auction, currentUser);
         return auction;
     }
 
@@ -70,12 +72,12 @@ public class AuctionService {
     }
 
     @Transactional
-    public void saveNewAuction(Auction auction, MultipartFile[] images) {
+    public void saveNewAuction(Long currentUserId, Auction auction, MultipartFile[] images) {
         List<Image> imageEntities = imageService.saveImagesToFilesystem(images);
         auction.setPostedAt(LocalDateTime.now());
         auction.setIsActive(true);
         auction.setImages(imageEntities);
-        auction.setOwner(userService.getCurrentUser());
+        auction.setOwner(userService.getUserById(currentUserId));
         auctionRepository.save(auction);
     }
 
@@ -85,7 +87,7 @@ public class AuctionService {
                 .toList();
     }
 
-    public Auction updateAuctionWithIsFavorite(Auction auction, User user) {
+    private Auction updateAuctionWithIsFavorite(Auction auction, User user) {
         auction.setIsFavorite(isAuctionFavorite(auction, user));
         return auction;
     }
@@ -119,14 +121,19 @@ public class AuctionService {
     @Transactional
     public void addAuctionToFavorites(Long currentUserId, Long auctionId) {
         User currentUser = userService.getUserById(currentUserId);
+
+        Auction auction = getAuctionById(auctionId);
+        if(currentUser.getFavoriteAuctions().contains(auction)) {
+            throw new AuctionAlreadyFavoriteException("Cannot add auction to favorites - auction is already added to favorites");
+        }
+
         currentUser.addFavoriteAuction(getAuctionById(auctionId));
-//        userService.saveUser(currentUser); //TODO is it needed?
     }
 
+    @Transactional
     public void removeAuctionFromFavorites(Long currentUserId, Long auctionId) {
         User currentUser = userService.getUserById(currentUserId);
         currentUser.removeFavoriteAuction(getAuctionById(auctionId));
-//        userService.saveUser(currentUser); //TODO is it needed?
     }
 
 

@@ -26,14 +26,16 @@ public class AuctionController {
     private final AuctionService auctionService;
 
     @GetMapping("/{auctionId}")
-    public CompleteAuctionDto getAuctionById(@PathVariable Long auctionId) {
-        return modelMapper.map(auctionService.getCompleteAuction(auctionId), CompleteAuctionDto.class);
+    public CompleteAuctionDto getAuctionById(@PathVariable Long auctionId,
+                                             @RequestParam Long currentUserId) {
+        return modelMapper.map(auctionService.getCompleteAuction(currentUserId, auctionId), CompleteAuctionDto.class);
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void postAuction(@RequestParam MultipartFile[] files,
-                            @RequestPart NewAuctionDto newAuctionDto) {
-        auctionService.saveNewAuction(modelMapper.map(newAuctionDto, Auction.class), files);
+                            @RequestPart NewAuctionDto newAuctionDto,
+                            @RequestParam Long currentUserId) {
+        auctionService.saveNewAuction(currentUserId, modelMapper.map(newAuctionDto, Auction.class), files);
     }
 
     @PutMapping("/{auctionId}/status")

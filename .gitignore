@@ -78,3 +78,6 @@ fabric.properties
 
 # images directory
 xhaven-server/src/main/resources/static/images/
+
+# environment variables
+.env

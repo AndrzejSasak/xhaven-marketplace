@@ -7,6 +7,7 @@ import com.xhaven.xhavenserver.service.AuctionService;
 import com.xhaven.xhavenserver.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
